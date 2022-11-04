@@ -2,6 +2,7 @@ package com.foodtracker
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import com.foodtracker.databinding.MainActivityBinding
 //import com.google.firebase.FirebaseApp
 import com.google.firebase.provider.FirebaseInitProvider
@@ -18,4 +19,11 @@ class MainActivity : AppCompatActivity() {
         // layout and set content view to the root view.
         setContentView(MainActivityBinding.inflate(layoutInflater).root)
     }
+
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        val viewModel : UserViewModel
+//
+//        outState.putCharArray("as", viewModel.email.toCharArray())
+//        super.onSaveInstanceState(outState)
+//    }
 }

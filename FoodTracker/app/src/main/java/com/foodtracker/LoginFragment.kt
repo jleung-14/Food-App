@@ -7,34 +7,43 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.foodtracker.R
+//import com.foodtracker.R
 import com.foodtracker.databinding.LoginFragmentBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
+
+    companion object {
+//        private const val TAG = "FoodTrackerTest"
+    }
 
     private lateinit var firebaseAuth: FirebaseAuth
 
     /** Binding to XML layout */
     private lateinit var binding: LoginFragmentBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Use the provided ViewBinding class to inflate the layout.
-        binding = LoginFragmentBinding.inflate(inflater, container, false)
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         firebaseAuth = requireNotNull(FirebaseAuth.getInstance())
 
+        // Use the provided ViewBinding class to inflate the layout.
+        binding = LoginFragmentBinding.inflate(inflater, container, false)
         binding.login.setOnClickListener { loginUserAccount() }
 
         // Return the root view.
         return binding.root
     }
 
-
+    private val viewModel: UserViewModel by activityViewModels()
     private fun loginUserAccount() {
         val email: String = binding.email.text.toString()
         val password: String = binding.password.text.toString()
+
+        // TODO: find an alternative to this!!
+        // save user's email & pass
+        viewModel.email.postValue(email)
+        viewModel.password.postValue(password)
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(
@@ -55,26 +64,30 @@ class LoginFragment : Fragment() {
 
         binding.progressBar.visibility = View.VISIBLE
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                binding.progressBar.visibility = View.GONE
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Login successful!",
-                        Toast.LENGTH_LONG
-                    ).show()
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            binding.progressBar.visibility = View.GONE
+            if (task.isSuccessful) {
+                // split the email input to extract 'user' portion
+                val emailUser = email.split("@")[0]
+                // set UserViewModel's user field to emailUser
+                viewModel.user.postValue(emailUser)
+                // issue Toast msg welcoming the 'emailUser'
+                Toast.makeText(
+                    requireContext(),
+                    "Login successful! Welcome $emailUser :)",
+                    Toast.LENGTH_LONG
+                ).show()
 
-                    findNavController().navigate(
-                        R.id.action_loginFragment_to_dashboardFragment
-                    )
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Login failed! Please try again later",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+                findNavController().navigate(
+                    R.id.action_loginFragment_to_dashboardFragment
+                )
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Login failed! Please try again later",
+                    Toast.LENGTH_LONG
+                ).show()
             }
+        }
     }
 }

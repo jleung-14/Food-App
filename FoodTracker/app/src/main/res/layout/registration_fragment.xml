@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="20dp"
     tools:context="com.foodtracker.RegistrationFragment">
 
     <TextView
@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/register_new_account_string" />
 
+    <!-- email input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_layout"
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="?attr/scrimBackground"
             android:autofillHints="email"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true" />
@@ -41,7 +42,7 @@
             android:layout_height="wrap_content"
             android:autofillHints="password"
             android:imeOptions="actionDone"
-            android:background="@color/white"
+            android:background="?attr/scrimBackground"
             android:inputType="textPassword"
             android:selectAllOnFocus="true" />
     </com.google.android.material.textfield.TextInputLayout>

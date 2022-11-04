@@ -30,4 +30,5 @@ class MainFragment : Fragment() {
         // Return the root view.
         return binding.root
     }
+
 }
