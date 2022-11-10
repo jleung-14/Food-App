@@ -28,11 +28,19 @@
         android:inputType="textPassword"
         android:importantForAutofill="no" />
 
+    <CheckBox
+        android:id="@+id/saveLoginInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Keep me signed in"
+        android:textSize="16dp"/>
+
     <Button
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_string" />
+        android:text="@string/login_string"
+        android:textSize="20dp"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
