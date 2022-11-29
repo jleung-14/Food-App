@@ -20,7 +20,6 @@ class ConfirmationFragment : Fragment() {
     companion object {
         private const val TAG = "Dashboard test"
     }
-    val viewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,16 +29,32 @@ class ConfirmationFragment : Fragment() {
         // Use the provided ViewBinding class to inflate
         // the layout and then return the root view.
         val binding = ConfirmationFragmentBinding.inflate(inflater, container, false)
+        // Firebase database instance
+        // ViewModel instance
+        val viewModel: UserViewModel by activityViewModels()
 
+        binding.noButton.setOnClickListener {
 
-//        binding.mic.setOnClickListener { onRecordButtonClick() }
+            Toast.makeText(
+                requireContext(),
+                "No selected",
+                Toast.LENGTH_SHORT
+            ).show()
 
-        binding.button.setOnClickListener { onYesClicked() }
-        // Return the layout root view.
+            findNavController().navigate(ConfirmationFragmentDirections.actionConfirmationFragmentToRecordFragment())
+        }
+        binding.yesButton.setOnClickListener {
+            Toast.makeText(
+                requireContext(),
+                "Yes selected",
+                Toast.LENGTH_SHORT
+            ).show()
+            //add to database - mohammad
+
+            findNavController().navigate(ConfirmationFragmentDirections.actionConfirmationFragmentToSocialMediaFragment())
+        }
+
+        // Return the root view.
         return binding.root
-    }
-
-    private fun onYesClicked() {
-        //needs to be implemented
     }
 }
