@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="168dp"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:background="@drawable/background_with_shadow"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Is this correct? "
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    tools:layout_editor_absoluteX="136dp" />
+
+                <TextView
+                    android:id="@+id/item_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="food "
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/yes_button"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="YES" />
+
+                    <Button
+                        android:id="@+id/no_button"
+                        android:layout_width="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="no" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+    <!--    <TextView-->
+<!--        android:id="@+id/textView4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_heigh="wrap_content"-->
+<!--        android:text="You have entered..."-->
+<!--        tools:layout_editor_absoluteX="136dp"-->
+<!--        tools:layout_editor_absoluteY="49dp"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        tools:layout_editor_absoluteX="136dp"-->
+<!--        tools:layout_editor_absoluteY="116dp"-->
+<!--        tools:srcCompat="@tools:sample/avatars"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView5"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Would you like to add more?"-->
+<!--        tools:layout_editor_absoluteX="117dp"-->
+<!--        tools:layout_editor_absoluteY="548dp"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button3"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Yes"-->
+<!--        android:onClick="record_"-->
+<!--        tools:layout_editor_absoluteX="68dp"-->
+<!--        tools:layout_editor_absoluteY="628dp" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="No"-->
+<!--        tools:layout_editor_absoluteX="239dp"-->
+<!--        tools:layout_editor_absoluteY="625dp" />-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="409dp"-->
+<!--        android:layout_height="47dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        tools:layout_editor_absoluteX="-14dp"-->
+<!--        tools:layout_editor_absoluteY="629dp"></LinearLayout>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
