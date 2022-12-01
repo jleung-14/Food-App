@@ -1,11 +1,15 @@
 package com.foodtracker
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.foodtracker.R
 import com.foodtracker.databinding.RegistrationFragmentBinding
@@ -15,7 +19,8 @@ class RegistrationFragment : Fragment() {
 
     private var validator = Validators()
     private lateinit var auth: FirebaseAuth
-
+    private lateinit var saveInfoBox : CheckBox
+    private val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
     /** Binding to XML layout */
     private lateinit var binding: RegistrationFragmentBinding
 
@@ -39,7 +44,7 @@ class RegistrationFragment : Fragment() {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.invalid_email),
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
 
             return
@@ -54,29 +59,60 @@ class RegistrationFragment : Fragment() {
 
             return
         }
+        // Firebase.database
 
         binding.progressBar.visibility = View.VISIBLE
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                binding.progressBar.visibility = View.GONE
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.register_success_string),
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    findNavController().navigate(
-                        R.id.action_registrationFragment_to_dashboardFragment
-                    )
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.register_failed_string),
-                        Toast.LENGTH_LONG
-                    ).show()
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            binding.progressBar.visibility = View.GONE
+            if (task.isSuccessful) {
+                // generate user field based on email
+                var user : String = email.split("@")[0]
+                Log.d("Registration Frag", "initial user: $user")
+                if (user.any(setOf('.', '#', '$', '[', ']')::contains)) {
+                    var c = 0
+                    for (x in user) {
+                        if (x == '.')
+                            user = user.substring(0, c) + '_' + user.substring(c+1)
+                        c++
+                    }
+                    Log.i("Registration Frag", "fixed user: $user")
                 }
+                // save login info...
+                saveInfoBox = binding.root.findViewById(binding.saveLoginInfo.id)
+                val viewModel : UserViewModel by activityViewModels()
+                if (saveInfoBox.isChecked) {
+                    viewModel.sharedPrefUsed = true
+                    // to SharedPref if checkbox is checked
+                    editor.putString("EMAIL_KEY", email)
+                    editor.putString("PASS_KEY", password)
+                    editor.putString("USER_KEY", user)
+                    editor.apply()
+                } else {
+                    // otherwise, post valid login info to UserViewModel
+                    viewModel.email.postValue(email)
+                    viewModel.password.postValue(password)
+                    viewModel.user.postValue(user)
+                }
+
+                // issue successful registration Toast msg
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.register_success_string),
+                    Toast.LENGTH_LONG
+                ).show()
+                // navigate to dashboard frag
+                findNavController().navigate(R.id.action_registrationFragment_to_dashboardFragment)
+            } else {
+                Log.w("RegistrationFrag", "createUserWithEmail:failure", task.exception)
+                // issue registration exception Toast msg
+                Toast.makeText(
+                    requireContext(),
+                    task.exception.toString().substringAfter(':').substringBefore('.').trim(),
+                    Toast.LENGTH_LONG).
+                show()
             }
+        }
     }
+
 }

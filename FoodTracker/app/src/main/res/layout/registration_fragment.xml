@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
@@ -33,6 +34,8 @@
         android:id="@+id/password_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/accent"
         android:hint="@string/password_hint_string">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -45,6 +48,13 @@
             android:inputType="textPassword"
             android:selectAllOnFocus="true" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/saveLoginInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_login_checkbox"
+        android:textSize="16sp"/>
 
     <Button
         android:id="@+id/register"
