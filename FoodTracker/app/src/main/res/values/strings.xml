@@ -15,4 +15,6 @@
     <string name="login_toast">Please enter email...</string>
     <string name="password_toast">Please enter password!</string>
     <string name="logout">Logout</string>
+    <string name="name">Welcome __UserName__</string>
+    <string name="meal">Breakfast/Lunch/Dinner</string>
 </resources>
