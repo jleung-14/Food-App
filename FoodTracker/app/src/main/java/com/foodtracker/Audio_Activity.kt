@@ -21,7 +21,7 @@ class Audio_Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_audio)
 
         // initializing variables of list view with their ids.
         outputTV = findViewById(R.id.idTVOutput)
