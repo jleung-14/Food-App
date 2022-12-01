@@ -2,9 +2,8 @@ package com.foodtracker
 
 class Validators {
     fun validEmail(email: String?) : Boolean {
-        if (email.isNullOrEmpty()) {
+        if (email.isNullOrEmpty())
             return false
-        }
 
         // General Email Regex (RFC 5322 Official Standard)
         val emailRegex = Regex("(?:[a-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\$%&'" +
@@ -18,12 +17,11 @@ class Validators {
     }
 
     fun validPassword(password: String?) : Boolean {
-        if (password.isNullOrEmpty()) {
+        if (password.isNullOrEmpty())
             return false
-        }
 
-        // Min 8 char, 1 letter, 1 number
-        val passwordRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}\$")
+        // Minimum 8 char, 1 letter, 1 number
+        val passwordRegex = Regex("^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\\d).*$")
         return passwordRegex.matches(password)
     }
 }

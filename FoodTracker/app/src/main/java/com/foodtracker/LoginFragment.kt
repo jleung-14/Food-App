@@ -1,5 +1,6 @@
 package com.foodtracker
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -11,7 +12,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-//import com.foodtracker.R
 import com.foodtracker.databinding.LoginFragmentBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -21,13 +21,18 @@ class LoginFragment : Fragment() {
         private const val TAG = "Login test"
     }
 
+    // Firebase authorization instance
     private lateinit var firebaseAuth: FirebaseAuth
-
     // Binding to XML layout
     private lateinit var binding: LoginFragmentBinding
-    lateinit var saveInfoBox : CheckBox
+    // save login info CheckBox
+    private lateinit var saveInfoBox : CheckBox
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    private val viewModel : UserViewModel by activityViewModels()
+    private val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
         // Use the provided ViewBinding class to inflate the layout.
         binding = LoginFragmentBinding.inflate(inflater, container, false)
 
@@ -39,14 +44,10 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-    private val viewModel: UserViewModel by activityViewModels()
     private fun loginUserAccount() {
-        val email: String = binding.email.text.toString()
+        val email: String = binding.email.text.toString().lowercase()
         val password: String = binding.password.text.toString()
-        // TODO: find an alternative to this!!
-        // save user's email & pass
-        viewModel.email.postValue(email)
-        viewModel.password.postValue(password)
+
         Log.d(TAG, "Username & pass sent to vm: $email & $password")
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(
@@ -64,39 +65,63 @@ class LoginFragment : Fragment() {
             ).show()
             return
         }
-        // TODO: checkbox code
+
         saveInfoBox = binding.root.findViewById(binding.saveLoginInfo.id)
         if (saveInfoBox.isChecked) {
-            Log.d(TAG, "checkbox functional :)")
+            viewModel.sharedPrefUsed = true
+            Log.i(TAG, "checkbox works, editing sharedPref")
+            // below two lines will put values for email and password in shared preferences
+            editor.putString("EMAIL_KEY", email)
+            editor.putString("PASS_KEY", password)
+            // save our data with key and value
+            editor.apply()
+        } else {
+            viewModel.email.postValue(email)
+            viewModel.password.postValue(password)
         }
-
         binding.progressBar.visibility = View.VISIBLE
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                binding.progressBar.visibility = View.GONE
-                if (task.isSuccessful) {
-                    // split the email input to extract 'user' portion
-                    val emailUser = email.split("@")[0]
-                    // set UserViewModel's user field
-                    viewModel.user.postValue(emailUser)
-                    // issue Toast msg
-                    Toast.makeText(
-                        requireContext(),
-                        "Login successful, welcome $emailUser!",
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    findNavController().navigate(
-                        R.id.action_loginFragment_to_dashboardFragment
-                    )
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Login failed! Please try again later",
-                        Toast.LENGTH_LONG
-                    ).show()
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            binding.progressBar.visibility = View.GONE
+            if (task.isSuccessful) {
+                // split the email input to extract 'user' portion
+                var user : String = email.split("@")[0]
+                Log.d(TAG, "initial user: $user")
+                if (user.any(setOf('.', '#', '$', '[', ']')::contains)) {
+                    var c = 0
+                    for (x in user) {
+                        if (x == '.')
+                            user = user.substring(0, c) + '_' + user.substring(c+1)
+                        c++
+                    }
+                    Log.i(TAG, "fixed user: $user")
                 }
+                if (saveInfoBox.isChecked) {
+                    editor.putString("USER_KEY", user)
+                    editor.apply()
+                } else
+                // set UserViewModel's user field if SharedPref isn't being used
+                    viewModel.user.postValue(user)
+
+                // issue welcome Toast msg
+                Toast.makeText(
+                    requireContext(),
+                    "Login successful, welcome $user!",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                findNavController()
+                    .navigate(R.id.action_loginFragment_to_dashboardFragment)
+            } else {
+                // login failure
+                Toast.makeText(
+                    requireContext(),
+                    "Login failed! Please try again later.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
+        }
+
     }
+
 }
