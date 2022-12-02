@@ -1,5 +1,6 @@
 package com.foodtracker
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,11 +10,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-//import com.foodtracker.R
 import com.foodtracker.databinding.WelcomeFragmentBinding
 import com.google.firebase.auth.FirebaseAuth
 
-import kotlin.random.Random
 
 class WelcomeFragment : Fragment() {
 
@@ -33,12 +32,20 @@ class WelcomeFragment : Fragment() {
         // ViewModel instance
         val viewModel: UserViewModel by activityViewModels()
         // 'user' name String (retrieved from UserViewModel instance)
-        val user: String? = viewModel.user.value
-        Log.d(TAG, "Username from vm: $user")
-        // making a key in the db using the user's name
-        // setting the value for ^ key to lenny face
+        var user: String? = null
+        var name: String? = null
 
-        binding.welcome.text = "Welcome $user"
+        if (viewModel.sharedPrefUsed) {
+            user = MainActivity.sharedPref.getString("USER_KEY", null)
+            name = MainActivity.sharedPref.getString("NAME_KEY", null)
+
+        } else {
+            user = viewModel.user.value
+            name = viewModel.name.value
+        }
+        Log.w("RegistrationFrag", "$name")
+
+        binding.welcome.text = "Welcome $name"
 
         // logout button
         binding.breakfast.setOnClickListener {
@@ -49,6 +56,8 @@ class WelcomeFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             viewModel.meal.postValue("Breakfast")
+            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRecordFragment())
+
         }
         binding.lunch.setOnClickListener {
 
@@ -58,6 +67,8 @@ class WelcomeFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             viewModel.meal.postValue("Lunch")
+            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRecordFragment())
+
         }
         binding.dinner.setOnClickListener {
 
@@ -67,18 +78,35 @@ class WelcomeFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             viewModel.meal.postValue("Dinner")
+            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRecordFragment())
+
         }
         binding.other.setOnClickListener {
-
             Toast.makeText(
                 requireContext(),
                 "Other selected",
                 Toast.LENGTH_SHORT
             ).show()
             viewModel.meal.postValue("Other")
+            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRecordFragment())
+
         }
-        findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRecordFragment()
-        )
+        binding.logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            // reset viewModel's boolean field; applies when sharedPref was used to login, user logs
+            // out, and then immediately logs into another account w/out using sharedPref
+            viewModel.sharedPrefUsed = false
+            val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
+            editor.clear()
+            editor.apply()
+            Toast.makeText(
+                requireContext(),
+                "You are now logged out!",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            findNavController().popBackStack(R.id.mainFragment, false)
+        }
         // Return the root view.
         return binding.root
     }

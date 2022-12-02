@@ -26,7 +26,7 @@
         tools:layout="@layout/registration_fragment" >
         <action
             android:id="@+id/action_registrationFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
+            app:destination="@id/welcomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -35,7 +35,7 @@
         tools:layout="@layout/login_fragment" >
         <action
             android:id="@+id/action_loginFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
+            app:destination="@id/welcomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment"

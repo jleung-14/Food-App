@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-//import com.foodtracker.R
 import com.foodtracker.databinding.RecordFragmentBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -20,7 +19,7 @@ class RecordFragment : Fragment() {
     companion object {
         private const val TAG = "Dashboard test"
     }
-    val viewModel: UserViewModel by activityViewModels()
+    private val viewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,12 +34,12 @@ class RecordFragment : Fragment() {
         // 'user' name String (retrieved from UserViewModel instance)
         val user: String? = viewModel.user.value
 
-        binding.mic.setOnClickListener { onRecordButtonClick() }
+        //binding.mic.setOnClickListener { onRecordButtonClick() }
         // Return the layout root view.
         return binding.root
     }
 
-    private fun onRecordButtonClick() {
+    /*private fun onRecordButtonClick() {
         when {
             viewModel.isPaused -> {
                 check(viewModel.isRecording)
@@ -54,5 +53,5 @@ class RecordFragment : Fragment() {
                 viewModel.record()
             }
         }
-    }
+    }*/
 }

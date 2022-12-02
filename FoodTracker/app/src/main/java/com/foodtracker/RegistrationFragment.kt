@@ -37,6 +37,8 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun registerNewUser() {
+        val name: String = binding.username.text.toString()
+        Log.i("RegistrationFrag", name)
         val email: String = binding.email.text.toString()
         val password: String = binding.password.text.toString()
 
@@ -87,12 +89,14 @@ class RegistrationFragment : Fragment() {
                     editor.putString("EMAIL_KEY", email)
                     editor.putString("PASS_KEY", password)
                     editor.putString("USER_KEY", user)
+                    editor.putString("NAME_KEY", name)
                     editor.apply()
                 } else {
                     // otherwise, post valid login info to UserViewModel
                     viewModel.email.postValue(email)
                     viewModel.password.postValue(password)
                     viewModel.user.postValue(user)
+                    viewModel.name.postValue(name)
                 }
 
                 // issue successful registration Toast msg

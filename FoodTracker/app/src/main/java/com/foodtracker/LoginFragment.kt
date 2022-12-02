@@ -103,13 +103,6 @@ class LoginFragment : Fragment() {
                 // set UserViewModel's user field if SharedPref isn't being used
                     viewModel.user.postValue(user)
 
-                // issue welcome Toast msg
-                Toast.makeText(
-                    requireContext(),
-                    "Login successful, welcome $user!",
-                    Toast.LENGTH_LONG
-                ).show()
-
                 findNavController()
                     .navigate(R.id.action_loginFragment_to_dashboardFragment)
             } else {
