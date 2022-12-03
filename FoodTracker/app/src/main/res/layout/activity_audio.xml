@@ -6,26 +6,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AudioActivity">
 
-    <TextView
-        android:id="@+id/mealText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:text="meal"
-        style="@style/GreenText"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
     <!--creating a simple image view for mic-->
+    <TextView
+        android:id="@+id/meal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center"
+        android:text="When ready please tap\nrecord button"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        style="@style/GreenText" />
+
     <ImageView
         android:id="@+id/idIVMic"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/ic_mic"/>
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_mic"
+        android:layout_below="@id/meal"
+        />
 
     <!--creating text view on below line-->
     <TextView
