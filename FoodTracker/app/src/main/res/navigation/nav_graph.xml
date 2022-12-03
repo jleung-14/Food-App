@@ -16,8 +16,8 @@
             android:id="@+id/action_mainFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
+            android:id="@+id/action_mainFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
@@ -25,8 +25,8 @@
         android:label="registration_fragment"
         tools:layout="@layout/registration_fragment" >
         <action
-            android:id="@+id/action_registrationFragment_to_dashboardFragment"
-            app:destination="@id/welcomeFragment" />
+            android:id="@+id/action_registrationFragment_to_introductionFragment"
+            app:destination="@id/introductionFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -86,6 +86,14 @@
         android:label="CalorieFragment" >
         <action
             android:id="@+id/action_calorieFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/introductionFragment"
+        android:name="com.foodtracker.IntroductionFragment"
+        android:label="IntroductionFragment" >
+        <action
+            android:id="@+id/action_introductionFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
     </fragment>
 </navigation>

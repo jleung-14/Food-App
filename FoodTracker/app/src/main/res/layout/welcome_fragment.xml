@@ -13,6 +13,7 @@
         android:layout_margin="16dp"
         android:layout_marginTop="160dp"
         android:text="@string/name"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toTopOf="@+id/breakfast"
         app:layout_constraintEnd_toEndOf="parent"

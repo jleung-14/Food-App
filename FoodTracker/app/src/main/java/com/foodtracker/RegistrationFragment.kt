@@ -106,7 +106,7 @@ class RegistrationFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
                 // navigate to dashboard frag
-                findNavController().navigate(R.id.action_registrationFragment_to_dashboardFragment)
+                findNavController().navigate(R.id.action_registrationFragment_to_introductionFragment)
             } else {
                 Log.w("RegistrationFrag", "createUserWithEmail:failure", task.exception)
                 // issue registration exception Toast msg

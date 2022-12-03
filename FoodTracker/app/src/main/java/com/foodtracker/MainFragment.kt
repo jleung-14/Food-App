@@ -37,7 +37,7 @@ class MainFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    findNavController().navigate(R.id.action_mainFragment_to_dashboardFragment)
+                    findNavController().navigate(R.id.action_mainFragment_to_welcomeFragment)
                 } else {
                     val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
                     editor.clear()
