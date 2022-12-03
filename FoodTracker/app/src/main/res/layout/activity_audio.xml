@@ -1,12 +1,23 @@
-
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Audio_Activity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AudioActivity">
 
+    <TextView
+        android:id="@+id/mealText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:text="meal"
+        style="@style/GreenText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <!--creating a simple image view for mic-->
     <ImageView
         android:id="@+id/idIVMic"
@@ -23,7 +34,7 @@
         android:layout_below="@id/idIVMic"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="Click on Mic to speak"
+        android:text="When ready please tap\nrecord button"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -36,11 +47,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/idIVMic"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:gravity="center"
         android:text="Output will appear here"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp" />
+
+
 
 </RelativeLayout>

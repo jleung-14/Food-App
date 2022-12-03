@@ -25,17 +25,14 @@ class RecordFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        // Use the provided ViewBinding class to inflate
-        // the layout and then return the root view.
-        val binding = RecordFragmentBinding.inflate(inflater, container, false)
-        // Firebase database instance
-        // ViewModel instance
-        // 'user' name String (retrieved from UserViewModel instance)
-        val user: String? = viewModel.user.value
 
-        //binding.mic.setOnClickListener { onRecordButtonClick() }
-        // Return the layout root view.
+    ): View {
+        val binding = RecordFragmentBinding.inflate(inflater, container, false)
+        var temp: String? = viewModel.meal.value
+        if (temp != null) {
+            Log.i("WHEE", temp)
+        }
+        binding.mealText.text = temp
         return binding.root
     }
 

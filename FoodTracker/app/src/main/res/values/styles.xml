@@ -3,5 +3,6 @@
     <style name="GreenText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">#03d3fc</item>
         <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

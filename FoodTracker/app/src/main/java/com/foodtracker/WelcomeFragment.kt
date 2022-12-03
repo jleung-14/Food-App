@@ -16,10 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class WelcomeFragment : Fragment() {
 
-    companion object {
-        private const val TAG = "Dashboard test"
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,7 +39,6 @@ class WelcomeFragment : Fragment() {
             user = viewModel.user.value
             name = viewModel.name.value
         }
-        Log.w("RegistrationFrag", "$name")
 
         binding.welcome.text = "Welcome $name"
 
@@ -107,6 +102,13 @@ class WelcomeFragment : Fragment() {
 
             findNavController().popBackStack(R.id.mainFragment, false)
         }
+        binding.goalButton.setOnClickListener {
+            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCalorieFragment())
+        }
+        viewModel.goal.value?.let { Log.i("Ratio Text 2", it) }
+
+        binding.ratio.text = viewModel.goal.value
+        Log.i("Ratio Text", binding.ratio.text.toString())
         // Return the root view.
         return binding.root
     }

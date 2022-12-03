@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
-class Audio_Activity : AppCompatActivity() {
+class AudioActivity : AppCompatActivity() {
 
     // on below line we are creating variables
     // for text view and image view
@@ -21,7 +21,7 @@ class Audio_Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_audio)
 
         // initializing variables of list view with their ids.
         outputTV = findViewById(R.id.idTVOutput)
@@ -60,7 +60,7 @@ class Audio_Activity : AppCompatActivity() {
                 // on below line we are displaying error message in toast
                 Toast
                     .makeText(
-                        this@Audio_Activity, " " + e.message,
+                        this@AudioActivity, " " + e.message,
                         Toast.LENGTH_SHORT
                     )
                     .show()

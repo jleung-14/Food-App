@@ -12,6 +12,7 @@ class UserViewModel : ViewModel(), DefaultLifecycleObserver {
     var password : MutableLiveData<String> = MutableLiveData<String>()
     var meal : MutableLiveData<String> = MutableLiveData<String>()
     var name: MutableLiveData<String> = MutableLiveData<String>()
+    var goal: MutableLiveData<String> = MutableLiveData<String>()
 
     // ToDo: is this needed?
     internal fun bindToActivityLifecycle(mainActivity: MainActivity) {
