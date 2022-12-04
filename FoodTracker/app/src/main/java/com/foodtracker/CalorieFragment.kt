@@ -1,18 +1,14 @@
 package com.foodtracker
 
-import android.R
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.foodtracker.databinding.CalorieFragmentBinding
-
 
 class CalorieFragment : Fragment() {
 
@@ -24,8 +20,14 @@ class CalorieFragment : Fragment() {
         val binding = CalorieFragmentBinding.inflate(inflater, container, false)
         val viewModel: UserViewModel by activityViewModels()
 
-
         binding.imageButton.setOnClickListener {
+            // get 'goalText' input
+            var cal : String = binding.goalText.text.toString()
+            Log.i("Calorie Fragment", "Calories from user: $cal")
+            // post to viewModel's goal field
+            viewModel.goal.postValue(cal)
+            cal = viewModel.goal.value.toString()
+            Log.i("Calorie Fragment", "Calories from viewModel: $cal")
             findNavController().navigate(CalorieFragmentDirections.actionCalorieFragmentToWelcomeFragment())
             //binding.root.findViewById<EditText>(R.id.goalText)
             var goalString: String = binding.goalText.text.toString()
@@ -34,7 +36,6 @@ class CalorieFragment : Fragment() {
             goalString = viewModel.goal.value.toString()
             Log.i("hahahahaha", goalString)
         }
-
 
         // Return the root view.
         return binding.root

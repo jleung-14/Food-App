@@ -33,6 +33,7 @@ class IntroductionFragment : Fragment() {
         viewModel.goal.postValue(goalString)
         goalString = viewModel.goal.value.toString()
         Log.i("hahahahaha", goalString)
+        binding.welcome.text = "Welcome ${viewModel.name.value}!"
 
         binding.imageButton.setOnClickListener {
             findNavController().navigate(IntroductionFragmentDirections.actionIntroductionFragmentToWelcomeFragment())
