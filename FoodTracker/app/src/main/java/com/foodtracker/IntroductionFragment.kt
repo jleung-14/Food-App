@@ -28,6 +28,12 @@ class IntroductionFragment : Fragment() {
         // ViewModel instance
         val viewModel: UserViewModel by activityViewModels()
 
+        var goalString: String = binding.goalText.text.toString()
+        Log.i("hehehehehe", goalString)
+        viewModel.goal.postValue(goalString)
+        goalString = viewModel.goal.value.toString()
+        Log.i("hahahahaha", goalString)
+
         binding.imageButton.setOnClickListener {
             findNavController().navigate(IntroductionFragmentDirections.actionIntroductionFragmentToWelcomeFragment())
         }

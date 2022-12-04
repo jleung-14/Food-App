@@ -28,11 +28,11 @@ class CalorieFragment : Fragment() {
         binding.imageButton.setOnClickListener {
             findNavController().navigate(CalorieFragmentDirections.actionCalorieFragmentToWelcomeFragment())
             //binding.root.findViewById<EditText>(R.id.goalText)
-            var temp: String = binding.goalText.text.toString()
-            Log.i("hehehehehe", temp)
-            viewModel.goal.postValue(temp)
-            temp = viewModel.goal.value.toString()
-            Log.i("hahahahaha", temp)
+            var goalString: String = binding.goalText.text.toString()
+            Log.i("hehehehehe", goalString)
+            viewModel.goal.postValue(goalString)
+            goalString = viewModel.goal.value.toString()
+            Log.i("hahahahaha", goalString)
         }
 
 
