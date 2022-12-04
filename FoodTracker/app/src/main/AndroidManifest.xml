@@ -22,6 +22,8 @@
         <activity android:name=".LoginFragment" tools:ignore="Instantiatable" />
         <activity android:name=".RegistrationFragment" tools:ignore="Instantiatable" />
         <activity android:name=".DashboardFragment" tools:ignore="Instantiatable" />
+        <activity android:name=".ActivityForFragment" tools:ignore="Instantiatable" />
+
     </application>
 
 </manifest>

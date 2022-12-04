@@ -48,21 +48,13 @@
         android:label="WelcomeFragment" >
         <action
             android:id="@+id/action_welcomeFragment_to_recordFragment"
-            app:destination="@id/recordFragment" />
+            app:destination="@id/audioActivity" />
         <action
             android:id="@+id/action_welcomeFragment_to_calorieFragment"
             app:destination="@id/calorieFragment" />
         <action
             android:id="@+id/action_welcomeFragment_to_audioActivity"
             app:destination="@id/audioActivity" />
-    </fragment>
-    <fragment
-        android:id="@+id/recordFragment"
-        android:name="com.foodtracker.RecordFragment"
-        android:label="WelcomeFragment" >
-        <action
-            android:id="@+id/action_welcomeFragment_to_recordFragment"
-            app:destination="@id/registrationFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmationFragment"
@@ -73,11 +65,11 @@
             app:destination="@id/socialMediaFragment" />
         <action
             android:id="@+id/action_confirmationFragment_to_recordFragment"
-            app:destination="@id/recordFragment" />
+            app:destination="@id/audioActivity" />
     </fragment>
     <fragment
         android:id="@+id/socialMediaFragment"
-        android:name="com.foodtracker.SocialMediaFragement"
+        android:name="com.foodtracker.SocialMediaFragment"
         android:label="SocialMediaFragment" >
         <action
             android:id="@+id/action_confirmationFragment_to_socialMediaFragment"
@@ -103,8 +95,6 @@
         android:id="@+id/audioActivity"
         android:name="com.foodtracker.AudioActivity"
         android:label="AudioActivity" >
-<!--        <action-->
-<!--            android:id="@+id/action_audioActivity_to_confirmFrag"-->
-<!--            app:destination="@id/confirmationFragment" />-->
+
     </activity>
 </navigation>

@@ -3,6 +3,8 @@ package com.foodtracker
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -19,9 +21,12 @@ class AudioActivity : AppCompatActivity() {
     // on below line we are creating a constant value
     private val REQUEST_CODE_SPEECH_INPUT = 1
 
+
+    private var btnGoToFragment: Button? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_audio)
+        setContentView(R.layout.audio_activity)
 
         // initializing variables of list view with their ids.
         outputTV = findViewById(R.id.idTVOutput)
@@ -65,6 +70,11 @@ class AudioActivity : AppCompatActivity() {
                     )
                     .show()
             }
+        }
+        btnGoToFragment = findViewById<View>(R.id.btn_go_to_fragment) as Button
+        btnGoToFragment!!.setOnClickListener {
+            val intent = Intent(this@AudioActivity, ActivityForFragment::class.java)
+            startActivity(intent)
         }
     }
 
