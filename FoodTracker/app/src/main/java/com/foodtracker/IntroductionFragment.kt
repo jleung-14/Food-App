@@ -31,22 +31,27 @@ class IntroductionFragment : Fragment() {
         binding.welcome.text = "Welcome ${viewModel.name.value}!"
 
         binding.imageButton.setOnClickListener {
-            var goal : Int = binding.goalText.text.toString().toInt()
-            Log.i("IntroFrag", "goal input: $goal")
+            // get 'goalText' input
+            var cal : String = binding.goalText.text.toString()
+            Log.i("Calorie Fragment", "Calories from user: $cal")
 
-            viewModel.goal.postValue(goal)
-            goal = viewModel.goal.value!!.toInt()
-            Log.i("IntroFrag", "goal from viewModel: $goal")
-
+            // post goal to db and viewModel's goal field
+            viewModel.goal.postValue(cal)
             val database = FirebaseDatabase.getInstance().getReference("Users")
-            val updateUser = mapOf<String,Any>("calorieGoal" to goal)
-
-            database.child(user!!).updateChildren(updateUser).addOnSuccessListener {
-                Log.i("IntroFrag", "Successfully Updated goal")
-                Toast.makeText(requireContext(),"New goal set!!",Toast.LENGTH_SHORT).show()
+            val user = mapOf("calorieGoal" to cal)
+            database.child(viewModel.user.value!!).updateChildren(user).addOnSuccessListener {
+                Log.i("IntoFrag/Firebase", "Updated goal in db")
             }.addOnFailureListener{
-                Log.i("IntroFrag", "FAILed to update goal")
+                Log.i("IntoFrag/Firebase", "Failed to update goal in db")
             }
+
+            //
+            val temp = cal
+            cal = viewModel.goal.value.toString()
+            if (cal == temp)
+                Log.i("Intro Fragment", "calories successfully posted to viewModel")
+            else
+                Log.w("Intro Fragment", "WRONG calories from viewModel: $cal")
 
             findNavController().navigate(IntroductionFragmentDirections.actionIntroductionFragmentToWelcomeFragment())
         }

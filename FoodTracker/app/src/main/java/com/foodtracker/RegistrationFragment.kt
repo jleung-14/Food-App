@@ -87,21 +87,20 @@ class RegistrationFragment : Fragment() {
                 saveInfoBox = binding.root.findViewById(binding.saveLoginInfo.id)
                 val viewModel : UserViewModel by activityViewModels()
                 if (saveInfoBox.isChecked) {
-                    viewModel.sharedPrefUsed = true
+//                    viewModel.sharedPrefUsed = true
                     // to SharedPref if checkbox is checked
                     editor.putString("EMAIL_KEY", email)
                     editor.putString("PASS_KEY", password)
                     editor.putString("USER_KEY", user)
                     editor.putString("NAME_KEY", name)
                     editor.apply()
-                } else {
-                    // otherwise, post valid login info to UserViewModel
-                    viewModel.email.postValue(email)
-                    viewModel.user.postValue(user)
-                    viewModel.name.postValue(name)
                 }
+                // post valid login info to UserViewModel
+                viewModel.email.postValue(email)
+                viewModel.user.postValue(user)
+                viewModel.name.postValue(name)
 
-                //
+                // adding new user to Firebase as child of 'Users'
                 database = FirebaseDatabase.getInstance().getReference("Users")
                 val newUser = User(name, user, email, "0")
                 database.child(user).setValue(newUser).addOnSuccessListener {

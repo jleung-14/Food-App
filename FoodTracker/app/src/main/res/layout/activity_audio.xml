@@ -13,9 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:gravity="center"
-        android:text="When ready please tap\nrecord button"
+        android:text="Meal"
         android:textAlignment="center"
-        android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         style="@style/GreenText" />
 
@@ -55,7 +54,10 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp" />
-
-
-
+    <Button
+        android:id="@+id/btn_go_to_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go To Fragment"
+        android:textAllCaps="false"/>
 </RelativeLayout>

@@ -3,6 +3,9 @@ package com.foodtracker
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -66,6 +69,17 @@ class AudioActivity : AppCompatActivity() {
                     .show()
             }
         }
+
+        val btnGoToFragment = findViewById<View>(R.id.btn_go_to_fragment) as Button
+        btnGoToFragment.setOnClickListener {
+            Log.i("AudioActivity", "inside onclicklistener")
+            val manager = supportFragmentManager
+            val transaction : androidx.fragment.app.FragmentTransaction = manager.beginTransaction()
+//            transaction.show(ConfirmationFragment())
+            transaction.add(ConfirmationFragment(), "tag")
+//            transaction.addToBackStack(null)
+            transaction.commitNow()
+        }
     }
 
     // on below line we are calling on activity result method.
@@ -85,10 +99,12 @@ class AudioActivity : AppCompatActivity() {
 
                 // on below line we are setting data
                 // to our output text view.
-                outputTV.setText( "abcdefg"
-//                    Objects.requireNonNull(res)[0]
+                outputTV.setText(// "abcdefg"
+                    Objects.requireNonNull(res)[0]
                 )
             }
         }
+
+
     }
 }

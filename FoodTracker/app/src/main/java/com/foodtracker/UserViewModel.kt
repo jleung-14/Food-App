@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 
 class UserViewModel : ViewModel(), DefaultLifecycleObserver {
     // Current user's name
-    var sharedPrefUsed : Boolean = false
+//    var sharedPrefUsed : Boolean = false
     var name: MutableLiveData<String> = MutableLiveData<String>()
     var user : MutableLiveData<String> = MutableLiveData<String>()
     var email : MutableLiveData<String> = MutableLiveData<String>()
-    var goal: MutableLiveData<Int> = MutableLiveData<Int>()
+    var goal: MutableLiveData<String> = MutableLiveData<String>()
     var meal : MutableLiveData<String> = MutableLiveData<String>()
 
     // ToDo: is this needed?

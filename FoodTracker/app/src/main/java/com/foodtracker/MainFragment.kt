@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.foodtracker.databinding.MainFragmentBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class MainFragment : Fragment() {
 
@@ -25,7 +26,26 @@ class MainFragment : Fragment() {
         val user : String? = MainActivity.sharedPref.getString("USER_KEY", null)
 
         if (email != null && password != null && user != null) {
-            viewModel.sharedPrefUsed = true
+            viewModel.email.postValue(email)
+            viewModel.user.postValue(user)
+
+            val database = FirebaseDatabase.getInstance().getReference("Users")
+            database.child(user).get().addOnSuccessListener {
+
+                if (it.exists()){
+                    val name = it.child("name").value
+                    val goal = it.child("calorieGoal").value
+                    Log.i("Main Fragment", "Successfully pulled name & goal from db")
+                    viewModel.name.postValue(name.toString())
+                    viewModel.goal.postValue(goal.toString())
+                } else {
+                    Toast.makeText(requireContext(),"User Doesn't Exist",Toast.LENGTH_SHORT).show()
+                }
+
+            }.addOnFailureListener{
+                Toast.makeText(requireContext(),"Failed",Toast.LENGTH_SHORT).show()
+            }
+
             val firebaseAuth : FirebaseAuth = requireNotNull(FirebaseAuth.getInstance())
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {

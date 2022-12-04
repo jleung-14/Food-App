@@ -103,8 +103,5 @@
         android:id="@+id/audioActivity"
         android:name="com.foodtracker.AudioActivity"
         android:label="AudioActivity" >
-<!--        <action-->
-<!--            android:id="@+id/action_audioActivity_to_confirmFrag"-->
-<!--            app:destination="@id/confirmationFragment" />-->
     </activity>
 </navigation>

@@ -23,13 +23,6 @@ import kotlin.random.Random
 
 class DashboardFragment : Fragment() {
 
-    companion object {
-        private const val TAG = "DashboardFrag"
-    }
-    // ViewModel instance
-    private val viewModel : UserViewModel by activityViewModels()
-    private var user : String? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,14 +32,9 @@ class DashboardFragment : Fragment() {
         val binding = DashboardFragmentBinding.inflate(inflater, container, false)
         // Firebase database instance
         val database = Firebase.database
-
-        if (viewModel.sharedPrefUsed) {
-            user = MainActivity.sharedPref.getString("USER_KEY", null)
-            Log.i(TAG, "Username from SharedPref: $user")
-        } else {
-            user = viewModel.user.value
-            Log.i(TAG, "Username from viewModel: $user")
-        }
+        val viewModel : UserViewModel by activityViewModels()
+        var user : String? = viewModel.user.value
+        Log.i("Dashboard Fragment", "Username from viewModel: $user")
 
         // making a key in the db using the user's name
         val myRef = database.getReference(user!!)
@@ -60,7 +48,7 @@ class DashboardFragment : Fragment() {
                 if (value == null)
                     myRef.setValue(101)
                 binding.textView.text = "$user $value"
-                Log.d(TAG, "Value is: $value")
+                Log.d("Dashboard Fragment", "Value is: $value")
             }
             override fun onCancelled(error: DatabaseError) {
                 // failed to read value
@@ -86,7 +74,7 @@ class DashboardFragment : Fragment() {
             FirebaseAuth.getInstance().signOut()
             // reset viewModel's boolean field; applies when sharedPref was used to login, user logs
             // out, and then immediately logs into another account w/out using sharedPref
-            viewModel.sharedPrefUsed = false
+//            viewModel.sharedPrefUsed = false
             val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
             editor.clear()
             editor.apply()
