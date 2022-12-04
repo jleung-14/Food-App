@@ -26,11 +26,7 @@ class ConfirmationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Use the provided ViewBinding class to inflate
-        // the layout and then return the root view.
         val binding = ConfirmationFragmentBinding.inflate(inflater, container, false)
-        // Firebase database instance
-        // ViewModel instance
         val viewModel: UserViewModel by activityViewModels()
 
         binding.noButton.setOnClickListener {
@@ -41,7 +37,8 @@ class ConfirmationFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            findNavController().navigate(ConfirmationFragmentDirections.actionConfirmationFragmentToRecordFragment())
+            findNavController().navigate(R.id.action_confirmationFragment_to_audioActivity)
+            //ConfirmationFragmentDirections.actionConfirmationFragmentToAudioActivity()
         }
         binding.yesButton.setOnClickListener {
             Toast.makeText(
@@ -51,7 +48,9 @@ class ConfirmationFragment : Fragment() {
             ).show()
             //add to database - mohammad
 
-            findNavController().navigate(ConfirmationFragmentDirections.actionConfirmationFragmentToSocialMediaFragment())
+
+            findNavController().navigate(R.id.action_confirmationFragment_to_socialMediaFragment)
+            //ConfirmationFragmentDirections.actionConfirmationFragmentToSocialMediaFragment()
         }
 
         // Return the root view.

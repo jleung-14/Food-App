@@ -64,7 +64,7 @@
             android:id="@+id/action_confirmationFragment_to_socialMediaFragment"
             app:destination="@id/socialMediaFragment" />
         <action
-            android:id="@+id/action_confirmationFragment_to_recordFragment"
+            android:id="@+id/action_confirmationFragment_to_audioActivity"
             app:destination="@id/audioActivity" />
     </fragment>
     <fragment
@@ -97,4 +97,5 @@
         android:label="AudioActivity" >
 
     </activity>
+
 </navigation>

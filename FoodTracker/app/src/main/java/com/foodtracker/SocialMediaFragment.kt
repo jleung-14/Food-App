@@ -19,10 +19,6 @@ class SocialMediaFragment : Fragment() {
         binding = SocialMediaFragmentBinding.inflate(inflater, container, false)
 
 
-//
-//        binding.register.setOnClickListener { registerNewUser() }
-
-        // Return the root view.
         return binding.root
     }
 //

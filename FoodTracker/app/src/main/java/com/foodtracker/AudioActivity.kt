@@ -73,8 +73,9 @@ class AudioActivity : AppCompatActivity() {
         }
         btnGoToFragment = findViewById<View>(R.id.btn_go_to_fragment) as Button
         btnGoToFragment!!.setOnClickListener {
-            val intent = Intent(this@AudioActivity, ActivityForFragment::class.java)
-            startActivity(intent)
+            //val intent = Intent(this@AudioActivity, ActivityForConfirmationFragment::class.java)
+            //startActivity(intent)
+            supportFragmentManager.beginTransaction().add(R.id.fragment_container, ConfirmationFragment()).commitNow()
         }
     }
 

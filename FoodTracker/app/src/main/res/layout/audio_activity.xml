@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AudioActivity">
+    tools:context=".AudioActivity"
+    android:id="@+id/fragment_container">
 
     <!--creating a simple image view for mic-->
     <TextView
