@@ -22,11 +22,11 @@ class CalorieFragment : Fragment() {
 
         binding.imageButton.setOnClickListener {
             // get 'goalText' input
-            var cal : String = binding.goalText.text.toString()
+            var cal : Int? = binding.goalText.text.toString().toInt()
             Log.i("Calorie Fragment", "Calories from user: $cal")
             // post to viewModel's goal field
             viewModel.goal.postValue(cal)
-            cal = viewModel.goal.value.toString()
+            cal = viewModel.goal.value
             Log.i("Calorie Fragment", "Calories from viewModel: $cal")
             findNavController().navigate(CalorieFragmentDirections.actionCalorieFragmentToWelcomeFragment())
         }

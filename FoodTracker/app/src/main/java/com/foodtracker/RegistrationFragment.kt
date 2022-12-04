@@ -97,7 +97,6 @@ class RegistrationFragment : Fragment() {
                 } else {
                     // otherwise, post valid login info to UserViewModel
                     viewModel.email.postValue(email)
-                    viewModel.password.postValue(password)
                     viewModel.user.postValue(user)
                     viewModel.name.postValue(name)
                 }
@@ -106,13 +105,7 @@ class RegistrationFragment : Fragment() {
                 database = FirebaseDatabase.getInstance().getReference("Users")
                 val newUser = User(name, user, email, "0")
                 database.child(user).setValue(newUser).addOnSuccessListener {
-//                    binding.name.text?.clear()
-//                    binding.email.text?.clear()
-//                    binding.password.text?.clear()
-                    // name, calories,
-
                     Log.i("Registration Frag", "db child successfully added")
-
                 }.addOnFailureListener{
                     Toast.makeText(requireContext(),"Failed",Toast.LENGTH_SHORT).show()
                 }

@@ -2,7 +2,7 @@ package com.foodtracker
 
 import android.content.SharedPreferences
 import android.os.Bundle
-//import android.util.Log
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.foodtracker.databinding.WelcomeFragmentBinding
 import com.google.firebase.auth.FirebaseAuth
-
+import com.google.firebase.database.FirebaseDatabase
 
 class WelcomeFragment : Fragment() {
 
@@ -28,19 +28,18 @@ class WelcomeFragment : Fragment() {
         // ViewModel instance
         val viewModel: UserViewModel by activityViewModels()
         // 'user' name String (retrieved from UserViewModel instance)
-//        val user: String?
-        val name: String?
+        val user: String?
+        var name: String? = null
+        var cal : Int? = 0
 
-        if (viewModel.sharedPrefUsed) {
-//            user = MainActivity.sharedPref.getString("USER_KEY", null)
-            name = MainActivity.sharedPref.getString("NAME_KEY", null)
-        } else {
-//            user = viewModel.user.value
-            name = viewModel.name.value
-        }
+        if (viewModel.sharedPrefUsed)
+            user = MainActivity.sharedPref.getString("USER_KEY", null)
+        else
+            user = viewModel.user.value
+        binding.welcome.text = "Welcome $name"
+
 
         // setting the welcome text
-        binding.welcome.text = "Welcome $name"
 
         binding.breakfast.setOnClickListener {
             Toast.makeText(
@@ -86,7 +85,7 @@ class WelcomeFragment : Fragment() {
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCalorieFragment())
         }
 
-        binding.ratio.text = viewModel.goal.value
+        binding.ratio.text = cal.toString()
 
         binding.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()

@@ -75,18 +75,18 @@ class LoginFragment : Fragment() {
             editor.putString("PASS_KEY", password)
             // save our data with key and value
             editor.apply()
-        } else {
+        } else
             viewModel.email.postValue(email)
-            viewModel.password.postValue(password)
-        }
         binding.progressBar.visibility = View.VISIBLE
 
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             binding.progressBar.visibility = View.GONE
+
             if (task.isSuccessful) {
                 // split the email input to extract 'user' portion
                 var user : String = email.split("@")[0]
                 Log.d(TAG, "initial user: $user")
+
                 if (user.any(setOf('.', '#', '$', '[', ']')::contains)) {
                     var c = 0
                     for (x in user) {
@@ -96,15 +96,15 @@ class LoginFragment : Fragment() {
                     }
                     Log.i(TAG, "fixed user: $user")
                 }
+
                 if (saveInfoBox.isChecked) {
                     editor.putString("USER_KEY", user)
                     editor.apply()
                 } else
-                // set UserViewModel's user field if SharedPref isn't being used
+                // set viewModel's user field if SharedPref isn't being used
                     viewModel.user.postValue(user)
 
-                findNavController()
-                    .navigate(R.id.action_loginFragment_to_dashboardFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
             } else {
                 // login failure
                 Toast.makeText(
@@ -114,7 +114,6 @@ class LoginFragment : Fragment() {
                 ).show()
             }
         }
-
     }
 
 }
