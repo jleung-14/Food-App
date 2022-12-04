@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_calorieFragment"
             app:destination="@id/calorieFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_audioActivity"
+            app:destination="@id/audioActivity" />
     </fragment>
     <fragment
         android:id="@+id/recordFragment"
@@ -96,4 +99,12 @@
             android:id="@+id/action_introductionFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
     </fragment>
+    <activity
+        android:id="@+id/audioActivity"
+        android:name="com.foodtracker.AudioActivity"
+        android:label="AudioActivity" >
+<!--        <action-->
+<!--            android:id="@+id/action_audioActivity_to_confirmFrag"-->
+<!--            app:destination="@id/confirmationFragment" />-->
+    </activity>
 </navigation>

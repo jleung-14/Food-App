@@ -2,7 +2,7 @@ package com.foodtracker
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
+//import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,23 +28,21 @@ class WelcomeFragment : Fragment() {
         // ViewModel instance
         val viewModel: UserViewModel by activityViewModels()
         // 'user' name String (retrieved from UserViewModel instance)
-        var user: String? = null
-        var name: String? = null
+//        val user: String?
+        val name: String?
 
         if (viewModel.sharedPrefUsed) {
-            user = MainActivity.sharedPref.getString("USER_KEY", null)
+//            user = MainActivity.sharedPref.getString("USER_KEY", null)
             name = MainActivity.sharedPref.getString("NAME_KEY", null)
-
         } else {
-            user = viewModel.user.value
+//            user = viewModel.user.value
             name = viewModel.name.value
         }
 
+        // setting the welcome text
         binding.welcome.text = "Welcome $name"
 
-        // logout button
         binding.breakfast.setOnClickListener {
-
             Toast.makeText(
                 requireContext(),
                 "Breakfast selected",
@@ -52,10 +50,9 @@ class WelcomeFragment : Fragment() {
             ).show()
             viewModel.meal.postValue("Breakfast")
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRecordFragment())
-
         }
-        binding.lunch.setOnClickListener {
 
+        binding.lunch.setOnClickListener {
             Toast.makeText(
                 requireContext(),
                 "Lunch selected",
@@ -63,10 +60,9 @@ class WelcomeFragment : Fragment() {
             ).show()
             viewModel.meal.postValue("Lunch")
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRecordFragment())
-
         }
-        binding.dinner.setOnClickListener {
 
+        binding.dinner.setOnClickListener {
             Toast.makeText(
                 requireContext(),
                 "Dinner selected",
@@ -74,8 +70,8 @@ class WelcomeFragment : Fragment() {
             ).show()
             viewModel.meal.postValue("Dinner")
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRecordFragment())
-
         }
+
         binding.other.setOnClickListener {
             Toast.makeText(
                 requireContext(),
@@ -84,8 +80,14 @@ class WelcomeFragment : Fragment() {
             ).show()
             viewModel.meal.postValue("Other")
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRecordFragment())
-
         }
+
+        binding.goalButton.setOnClickListener {
+            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCalorieFragment())
+        }
+
+        binding.ratio.text = viewModel.goal.value
+
         binding.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             // reset viewModel's boolean field; applies when sharedPref was used to login, user logs
@@ -102,13 +104,7 @@ class WelcomeFragment : Fragment() {
 
             findNavController().popBackStack(R.id.mainFragment, false)
         }
-        binding.goalButton.setOnClickListener {
-            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCalorieFragment())
-        }
-        viewModel.goal.value?.let { Log.i("Ratio Text 2", it) }
 
-        binding.ratio.text = viewModel.goal.value
-        Log.i("Ratio Text", binding.ratio.text.toString())
         // Return the root view.
         return binding.root
     }

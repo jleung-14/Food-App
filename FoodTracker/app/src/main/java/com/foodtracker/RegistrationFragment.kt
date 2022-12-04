@@ -11,7 +11,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.foodtracker.R
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.foodtracker.databinding.RegistrationFragmentBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -21,10 +22,11 @@ class RegistrationFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var saveInfoBox : CheckBox
     private val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
+    private lateinit var database : DatabaseReference
     /** Binding to XML layout */
     private lateinit var binding: RegistrationFragmentBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Use the provided ViewBinding class to inflate the layout.
         binding = RegistrationFragmentBinding.inflate(inflater, container, false)
 
@@ -37,7 +39,7 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun registerNewUser() {
-        val name: String = binding.username.text.toString()
+        val name: String = binding.name.text.toString()
         Log.i("RegistrationFrag", name)
         val email: String = binding.email.text.toString()
         val password: String = binding.password.text.toString()
@@ -80,7 +82,8 @@ class RegistrationFragment : Fragment() {
                     }
                     Log.i("Registration Frag", "fixed user: $user")
                 }
-                // save login info...
+
+                // save login info to either sharedPref or viewModel
                 saveInfoBox = binding.root.findViewById(binding.saveLoginInfo.id)
                 val viewModel : UserViewModel by activityViewModels()
                 if (saveInfoBox.isChecked) {
@@ -99,12 +102,28 @@ class RegistrationFragment : Fragment() {
                     viewModel.name.postValue(name)
                 }
 
+                //
+                database = FirebaseDatabase.getInstance().getReference("Users")
+                val newUser = User(name, user, email, "0")
+                database.child(user).setValue(newUser).addOnSuccessListener {
+//                    binding.name.text?.clear()
+//                    binding.email.text?.clear()
+//                    binding.password.text?.clear()
+                    // name, calories,
+
+                    Log.i("Registration Frag", "db child successfully added")
+
+                }.addOnFailureListener{
+                    Toast.makeText(requireContext(),"Failed",Toast.LENGTH_SHORT).show()
+                }
+
                 // issue successful registration Toast msg
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.register_success_string),
                     Toast.LENGTH_LONG
                 ).show()
+
                 // navigate to dashboard frag
                 findNavController().navigate(R.id.action_registrationFragment_to_introductionFragment)
             } else {

@@ -28,6 +28,8 @@ class IntroductionFragment : Fragment() {
         // ViewModel instance
         val viewModel: UserViewModel by activityViewModels()
 
+        binding.welcome.text = "Welcome ${viewModel.name.value}!"
+
         binding.imageButton.setOnClickListener {
             findNavController().navigate(IntroductionFragmentDirections.actionIntroductionFragmentToWelcomeFragment())
         }

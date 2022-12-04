@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
+//import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlin.random.Random
 
@@ -75,7 +76,7 @@ class DashboardFragment : Fragment() {
         // update DB button
         binding.updateDB.setOnClickListener {
             // generating a random 3-digit number
-            val code = Random.nextInt(100, 999)
+            val code = Random.nextInt(102, 999)
             // setting db value to code
             myRef.setValue(code)
         }
