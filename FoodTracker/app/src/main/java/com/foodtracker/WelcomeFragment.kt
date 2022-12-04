@@ -2,7 +2,7 @@ package com.foodtracker
 
 import android.content.SharedPreferences
 import android.os.Bundle
-//import android.util.Log
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.foodtracker.databinding.WelcomeFragmentBinding
 import com.google.firebase.auth.FirebaseAuth
-
+import com.google.firebase.database.FirebaseDatabase
 
 class WelcomeFragment : Fragment() {
 
@@ -28,19 +28,14 @@ class WelcomeFragment : Fragment() {
         // ViewModel instance
         val viewModel: UserViewModel by activityViewModels()
         // 'user' name String (retrieved from UserViewModel instance)
-//        val user: String?
-        val name: String?
+        val user: String? = viewModel.user.value
+        var name: String? = viewModel.name.value
+        var cal : String? = viewModel.goal.value
 
-        if (viewModel.sharedPrefUsed) {
-//            user = MainActivity.sharedPref.getString("USER_KEY", null)
-            name = MainActivity.sharedPref.getString("NAME_KEY", null)
-        } else {
-//            user = viewModel.user.value
-            name = viewModel.name.value
-        }
+        binding.welcome.text = "Welcome $name"
+
 
         // setting the welcome text
-        binding.welcome.text = "Welcome $name"
 
         binding.breakfast.setOnClickListener {
             Toast.makeText(
@@ -79,20 +74,20 @@ class WelcomeFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             viewModel.meal.postValue("Other")
-            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRecordFragment())
+            findNavController().navigate(R.id.action_welcomeFragment_to_audioActivity)
         }
 
         binding.goalButton.setOnClickListener {
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCalorieFragment())
         }
 
-        binding.ratio.text = viewModel.goal.value
+        binding.ratio.text = cal.toString()
 
         binding.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             // reset viewModel's boolean field; applies when sharedPref was used to login, user logs
             // out, and then immediately logs into another account w/out using sharedPref
-            viewModel.sharedPrefUsed = false
+//            viewModel.sharedPrefUsed = false
             val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
             editor.clear()
             editor.apply()

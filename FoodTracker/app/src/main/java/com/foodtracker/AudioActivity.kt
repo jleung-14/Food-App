@@ -3,6 +3,7 @@ package com.foodtracker
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -21,12 +22,9 @@ class AudioActivity : AppCompatActivity() {
     // on below line we are creating a constant value
     private val REQUEST_CODE_SPEECH_INPUT = 1
 
-
-    private var btnGoToFragment: Button? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.audio_activity)
+        setContentView(R.layout.activity_audio)
 
         // initializing variables of list view with their ids.
         outputTV = findViewById(R.id.idTVOutput)
@@ -62,20 +60,33 @@ class AudioActivity : AppCompatActivity() {
             try {
                 startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
             } catch (e: Exception) {
-                // on below line we are displaying error message in toast
-                Toast
-                    .makeText(
-                        this@AudioActivity, " " + e.message,
-                        Toast.LENGTH_SHORT
-                    )
-                    .show()
+
+                // on below line we are specifying a prompt
+                // message as speak to text on below line.
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
+
+                // on below line we are specifying a try catch block.
+                // in this block we are calling a start activity
+                // for result method and passing our result code.
+                try {
+                    startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+                } catch (e: Exception) {
+                    // on below line we are displaying error message in toast
+                    Toast
+                        .makeText(
+                            this@AudioActivity, " " + e.message,
+                            Toast.LENGTH_SHORT
+                        )
+                        .show()
+                }
             }
-        }
-        btnGoToFragment = findViewById<View>(R.id.btn_go_to_fragment) as Button
-        btnGoToFragment!!.setOnClickListener {
-            //val intent = Intent(this@AudioActivity, ActivityForConfirmationFragment::class.java)
-            //startActivity(intent)
-            supportFragmentManager.beginTransaction().add(R.id.fragment_container, ConfirmationFragment()).commitNow()
+
+            val btnGoToFragment = findViewById<View>(R.id.btn_go_to_fragment) as Button
+            btnGoToFragment.setOnClickListener {
+                Log.i("AudioActivity", "inside onclicklistener")
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.audio_container, ConfirmationFragment()).commitNow()
+            }
         }
     }
 
@@ -96,10 +107,12 @@ class AudioActivity : AppCompatActivity() {
 
                 // on below line we are setting data
                 // to our output text view.
-                outputTV.setText( "abcdefg"
-//                    Objects.requireNonNull(res)[0]
+                outputTV.setText(// "abcdefg"
+                    Objects.requireNonNull(res)[0]
                 )
             }
         }
+
+
     }
 }
