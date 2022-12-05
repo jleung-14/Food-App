@@ -55,10 +55,24 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp" />
-    <Button
+
+    <ImageButton
         android:id="@+id/btn_go_to_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go To Fragment"
-        android:textAllCaps="false"/>
+        android:layout_below="@id/idIVMic"
+        android:layout_alignRight="@id/idTVOutput"
+        android:layout_marginTop="380dp"
+        android:layout_marginRight="50dp"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <EditText
+        android:id="@+id/calorieText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:hint="Calories"
+        android:layout_alignBottom="@id/btn_go_to_fragment"
+        android:layout_marginLeft="50dp" />
 </RelativeLayout>

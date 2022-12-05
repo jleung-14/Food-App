@@ -81,6 +81,7 @@ class WelcomeFragment : Fragment() {
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCalorieFragment())
         }
 
+
         binding.ratio.text = cal.toString()
 
         binding.logout.setOnClickListener {

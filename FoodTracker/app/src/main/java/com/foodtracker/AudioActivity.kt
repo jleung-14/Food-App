@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
 class AudioActivity : AppCompatActivity() {
@@ -110,6 +111,10 @@ class AudioActivity : AppCompatActivity() {
                 outputTV.setText(// "abcdefg"
                     Objects.requireNonNull(res)[0]
                 )
+
+                //adding to firebase
+
+                
             }
         }
 
