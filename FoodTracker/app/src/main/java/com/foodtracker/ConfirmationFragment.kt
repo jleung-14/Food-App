@@ -40,10 +40,15 @@ class ConfirmationFragment : Fragment() {
             database.child(username).get().addOnSuccessListener {
                 if (it.exists()) {
                     //food here should be the foods field from firebase, which should be an arrayList of strings
-                    if(foodEntry != null) {
-                        val food = it.child("foods").value
-                        //this has a null pointer
-                        totalFoods.addAll(food as Collection<String>)
+                    if (foodEntry != null) {
+                        if(it.child("foods").value != null) {
+                            val food = it.child("foods").value
+                            Log.i("testing food", food as String)
+                            totalFoods.addAll(food as Collection<String>)
+                        }
+                    else{
+                            totalFoods.add(foodEntry)
+                        }
                     }
                     //currentCal from firebase
                     val curr = it.child("currentCal").value.toString().toInt()
