@@ -71,8 +71,24 @@ class AudioActivity : AppCompatActivity() {
                     .show()
             }
         }
-
-
+        val calInput = findViewById<EditText>(R.id.calorieText)
+        val btnGoToFragment = findViewById<View>(R.id.btn_go_to_fragment) as ImageButton
+        btnGoToFragment.setOnClickListener {
+            Log.i("AudioActivity", "inside onclicklistener")
+            val confirmBundle = Bundle()
+            confirmBundle.putString("entry", "wheeeeeeeeEEEeee")
+            confirmBundle.putString("calories", calInput.text.toString())
+            confirmBundle.putString("username", username)
+            if (confirmBundle == null) {
+                Log.w("AudioActivity", "bundle arg is NULL")
+            }
+            val conf = ConfirmationFragment()
+            conf.arguments = confirmBundle
+            if (conf.arguments == null) {
+                Log.w("AudioActivity", "ConfirmFrag arguments is NULL")
+            }
+            supportFragmentManager.beginTransaction().add(R.id.audio_container, conf).commitNow()
+        }
     }
 
     // on below line we are calling on activity result method.
@@ -119,5 +135,4 @@ class AudioActivity : AppCompatActivity() {
             }
         }
     }
-
 }

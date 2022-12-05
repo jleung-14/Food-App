@@ -33,28 +33,44 @@ class ConfirmationFragment : Fragment() {
         val calories = bundle.getString("calories")
         val username = bundle.getString("username")
         var totalCalories = 0
+        var totalFoods : MutableList<String> = ArrayList()
         val database = FirebaseDatabase.getInstance().getReference("Users")
 
         if (username != null) {
             database.child(username).get().addOnSuccessListener {
                 if (it.exists()) {
+                    //food here should be the foods field from firebase, which should be an arrayList of strings
+                    if(foodEntry != null) {
+                        val food = it.child("foods").value
+                        //this has a null pointer
+                        totalFoods.addAll(food as Collection<String>)
+                    }
                     //currentCal from firebase
                     val curr = it.child("currentCal").value.toString().toInt()
+
                     if (calories != null) {
                         totalCalories = curr + calories.toInt()
                     }
                 } else {
                     Toast.makeText(requireContext(), "Failed1", Toast.LENGTH_SHORT).show()
                 }
-                val user = mapOf("currentCal" to totalCalories.toString())
-
+                var user = mapOf("currentCal" to totalCalories.toString())
                 database.child(username).updateChildren(user).addOnSuccessListener {
                 }.addOnFailureListener{
                     Log.i("Box is checked; stay logged in", "Box is checked; stay logged in")
                 }
+                //DOUBTS ON THIS LINE, MAP APPARENTLY NEEDS STRING, STRING BUT I DONT THINK WE CAN JUST TOSTRING AN ENTIRE ARRAYLIST
+                user = mapOf("foods" to totalFoods.toString())
+                database.child("foods").updateChildren(user).addOnSuccessListener {
+                        Log.i("Calorie Fragment", "Updated goal in db")
+                }.addOnFailureListener{
+                        Log.i("Calorie Fragment", "Failed to update goal in db")
+                }
+
             }.addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed2", Toast.LENGTH_SHORT).show()
             }
+
         }
 
 
@@ -77,7 +93,7 @@ class ConfirmationFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             //add to database - mohammad
-            findNavController().navigate(R.id.action_confirmationFragment_to_socialMediaFragment)
+            findNavController().navigate(R.id.action_confirmationFragment_to_listFragment)
         }
 
         // Return the root view.

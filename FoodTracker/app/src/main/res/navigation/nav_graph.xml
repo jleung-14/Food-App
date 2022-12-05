@@ -55,31 +55,15 @@
             app:destination="@id/audioActivity" />
     </fragment>
     <fragment
-        android:id="@+id/recordFragment"
-        android:name="com.foodtracker.RecordFragment"
-        android:label="WelcomeFragment" >
-        <action
-            android:id="@+id/action_welcomeFragment_to_recordFragment"
-            app:destination="@id/recordFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/confirmationFragment"
         android:name="com.foodtracker.ConfirmationFragment"
         android:label="ConfirmationFragment" >
         <action
-            android:id="@+id/action_confirmationFragment_to_socialMediaFragment"
-            app:destination="@id/socialMediaFragment" />
+            android:id="@+id/action_confirmationFragment_to_listFragment"
+            app:destination="@id/listFragment" />
         <action
             android:id="@+id/action_confirmationFragment_to_audioActivity"
             app:destination="@id/audioActivity" />
-    </fragment>
-    <fragment
-        android:id="@+id/socialMediaFragment"
-        android:name="com.foodtracker.SocialMediaFragement"
-        android:label="SocialMediaFragment" >
-        <action
-            android:id="@+id/action_confirmationFragment_to_socialMediaFragment"
-            app:destination="@id/socialMediaFragment" />
     </fragment>
     <fragment
         android:id="@+id/calorieFragment"
@@ -92,6 +76,14 @@
     <fragment
         android:id="@+id/introductionFragment"
         android:name="com.foodtracker.IntroductionFragment"
+        android:label="IntroductionFragment" >
+        <action
+            android:id="@+id/action_introductionFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.foodtracker.ListFragment"
         android:label="IntroductionFragment" >
         <action
             android:id="@+id/action_introductionFragment_to_welcomeFragment"
