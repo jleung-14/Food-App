@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
@@ -70,16 +67,7 @@ class AudioActivity : AppCompatActivity() {
             }
         }
 
-        val btnGoToFragment = findViewById<View>(R.id.btn_go_to_fragment) as Button
-        btnGoToFragment.setOnClickListener {
-            Log.i("AudioActivity", "inside onclicklistener")
-            val manager = supportFragmentManager
-            val transaction : androidx.fragment.app.FragmentTransaction = manager.beginTransaction()
-//            transaction.show(ConfirmationFragment())
-            transaction.add(ConfirmationFragment(), "tag")
-//            transaction.addToBackStack(null)
-            transaction.commitNow()
-        }
+
     }
 
     // on below line we are calling on activity result method.
@@ -89,6 +77,7 @@ class AudioActivity : AppCompatActivity() {
         // in this method we are checking request
         // code with our result code.
         if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
+            var transcription = "test"
             // on below line we are checking if result code is ok
             if (resultCode == RESULT_OK && data != null) {
 
@@ -99,12 +88,30 @@ class AudioActivity : AppCompatActivity() {
 
                 // on below line we are setting data
                 // to our output text view.
-                outputTV.setText(// "abcdefg"
+                outputTV.setText(
                     Objects.requireNonNull(res)[0]
                 )
+                transcription = Objects.requireNonNull(res)[0]
+            }
+
+            val calInput = findViewById<EditText>(R.id.calorieText)
+            val btnGoToFragment = findViewById<View>(R.id.btn_go_to_fragment) as ImageButton
+            btnGoToFragment.setOnClickListener {
+                Log.i("AudioActivity", "inside onclicklistener")
+                val confirmBundle = Bundle()
+                confirmBundle.putString("entry", transcription)
+                confirmBundle.putString("calories", calInput.text.toString())
+                if (confirmBundle == null) {
+                    Log.w("AudioActivity", "bundle arg is NULL")
+                }
+                val conf = ConfirmationFragment()
+                conf.arguments = confirmBundle
+                if (conf.arguments == null) {
+                    Log.w("AudioActivity", "ConfirmFrag arguments is NULL")
+                }
+                supportFragmentManager.beginTransaction().add(R.id.audio_container, conf).commitNow()
             }
         }
-
-
     }
+
 }

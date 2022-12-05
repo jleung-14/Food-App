@@ -1,5 +1,6 @@
 package com.foodtracker
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -75,9 +76,10 @@ class DashboardFragment : Fragment() {
             // reset viewModel's boolean field; applies when sharedPref was used to login, user logs
             // out, and then immediately logs into another account w/out using sharedPref
 //            viewModel.sharedPrefUsed = false
-            val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
-            editor.clear()
-            editor.apply()
+            val editor: SharedPreferences.Editor? =
+                activity?.getSharedPreferences("shared_prefs", Context.MODE_PRIVATE)?.edit()
+            editor?.clear()
+            editor?.apply()
             Toast.makeText(
                 requireContext(),
                 "You are now logged out!",

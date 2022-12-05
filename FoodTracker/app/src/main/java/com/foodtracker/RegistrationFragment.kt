@@ -1,6 +1,7 @@
 package com.foodtracker
 
-import android.content.SharedPreferences
+import android.content.Context
+//import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,7 +22,7 @@ class RegistrationFragment : Fragment() {
     private var validator = Validators()
     private lateinit var auth: FirebaseAuth
     private lateinit var saveInfoBox : CheckBox
-    private val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
+//    private val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
     private lateinit var database : DatabaseReference
     /** Binding to XML layout */
     private lateinit var binding: RegistrationFragmentBinding
@@ -89,11 +90,12 @@ class RegistrationFragment : Fragment() {
                 if (saveInfoBox.isChecked) {
 //                    viewModel.sharedPrefUsed = true
                     // to SharedPref if checkbox is checked
-                    editor.putString("EMAIL_KEY", email)
-                    editor.putString("PASS_KEY", password)
-                    editor.putString("USER_KEY", user)
-                    editor.putString("NAME_KEY", name)
-                    editor.apply()
+                    val editor = activity?.getSharedPreferences("shared_pref", Context.MODE_PRIVATE)?.edit()
+                    editor?.putString("EMAIL_KEY", email)
+                    editor?.putString("PASS_KEY", password)
+                    editor?.putString("USER_KEY", user)
+                    editor?.putString("NAME_KEY", name)
+                    editor?.apply()
                 }
                 // post valid login info to UserViewModel
                 viewModel.email.postValue(email)

@@ -17,10 +17,6 @@ import kotlin.random.Random
 
 class ConfirmationFragment : Fragment() {
 
-    companion object {
-        private const val TAG = "Dashboard test"
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,15 +29,22 @@ class ConfirmationFragment : Fragment() {
         // ViewModel instance
         val viewModel: UserViewModel by activityViewModels()
 
-        binding.noButton.setOnClickListener {
+        val bundle = arguments
+        val foodEntry = bundle!!.getString("entry")
+        val calories = bundle.getString("calories")
+        binding.itemInput.text = "$foodEntry\n${calories}cal"
 
+        val addToGoal = (viewModel.currentCal.value!!.toInt() + calories!!.toInt()).toString()
+        viewModel.currentCal.postValue(addToGoal)
+
+        binding.noButton.setOnClickListener {
             Toast.makeText(
                 requireContext(),
                 "No selected",
                 Toast.LENGTH_SHORT
             ).show()
 
-            findNavController().navigate(ConfirmationFragmentDirections.actionConfirmationFragmentToRecordFragment())
+            findNavController().navigate(R.id.action_confirmationFragment_to_audioActivity)
         }
         binding.yesButton.setOnClickListener {
             Toast.makeText(
@@ -50,8 +53,7 @@ class ConfirmationFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             //add to database - mohammad
-
-            findNavController().navigate(ConfirmationFragmentDirections.actionConfirmationFragmentToSocialMediaFragment())
+            findNavController().navigate(R.id.action_confirmationFragment_to_socialMediaFragment)
         }
 
         // Return the root view.

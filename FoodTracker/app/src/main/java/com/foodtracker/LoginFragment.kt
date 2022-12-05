@@ -1,6 +1,7 @@
 package com.foodtracker
 
-import android.content.SharedPreferences
+import android.content.Context
+//import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -26,7 +27,7 @@ class LoginFragment : Fragment() {
     private lateinit var saveInfoBox : CheckBox
 
     private val viewModel : UserViewModel by activityViewModels()
-    private val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
+//    private val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -67,10 +68,10 @@ class LoginFragment : Fragment() {
 //            viewModel.sharedPrefUsed = true
             Log.i("Login Fragment", "checkbox works, editing sharedPref")
             // below two lines will put values for email and password in shared preferences
-            editor.putString("EMAIL_KEY", email)
-            editor.putString("PASS_KEY", password)
-            // save our data with key and value
-            editor.apply()
+            val editor = activity?.getSharedPreferences("shared_pref", Context.MODE_PRIVATE)?.edit()
+            editor?.putString("EMAIL_KEY", email)
+            editor?.putString("PASS_KEY", password)
+            editor?.apply()
         }
         viewModel.email.postValue(email)
 
@@ -96,6 +97,7 @@ class LoginFragment : Fragment() {
                 Log.i("Login Fragment", "read fields from Firebase: $name | $goal")
                 viewModel.name.postValue(name.toString())
                 viewModel.goal.postValue(goal.toString())
+                Log.i("Login Fragment", "fields in vm: ${viewModel.name.value} or ${viewModel.name.value.toString()}")
             } else {
                 Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
             }
@@ -110,27 +112,28 @@ class LoginFragment : Fragment() {
 
             if (task.isSuccessful) {
                 // split the email input to extract 'user' portion
-                var user : String = email.split("@")[0]
-                Log.d("Login Fragment", "initial user: $user")
-
-                if (user.any(setOf('.', '#', '$', '[', ']')::contains)) {
-                    var c = 0
-                    for (x in user) {
-                        if (x == '.')
-                            user = user.substring(0, c) + '_' + user.substring(c+1)
-                        c++
-                    }
-                    Log.i("Login Fragment", "fixed user: $user")
-                }
+//                var user : String = email.split("@")[0]
+//                Log.d("Login Fragment", "initial user: $user")
+//
+//                if (user.any(setOf('.', '#', '$', '[', ']')::contains)) {
+//                    var c = 0
+//                    for (x in user) {
+//                        if (x == '.')
+//                            user = user.substring(0, c) + '_' + user.substring(c+1)
+//                        c++
+//                    }
+//                    Log.i("Login Fragment", "fixed user: $user")
+//                }
 
                 if (saveInfoBox.isChecked) {
-                    editor.putString("USER_KEY", user)
-                    editor.apply()
+                    val editor = activity?.getSharedPreferences("shared_pref", Context.MODE_PRIVATE)?.edit()
+                    editor?.putString("USER_KEY", user)
+                    editor?.apply()
                 } else
                 // set viewModel's user field if SharedPref isn't being used
                     viewModel.user.postValue(user)
 
-                findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_welcomeFragment)
             } else {
                 // login failure
                 Toast.makeText(

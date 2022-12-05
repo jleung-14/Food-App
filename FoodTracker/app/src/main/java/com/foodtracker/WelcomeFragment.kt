@@ -1,5 +1,6 @@
 package com.foodtracker
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -30,12 +31,12 @@ class WelcomeFragment : Fragment() {
         // 'user' name String (retrieved from UserViewModel instance)
         val user: String? = viewModel.user.value
         var name: String? = viewModel.name.value
-        var cal : String? = viewModel.goal.value
+        var calGoal : String? = viewModel.goal.value
+        var calCurr : String? = viewModel.currentCal.value
 
+        // setting on-screen text fields
         binding.welcome.text = "Welcome $name"
-
-
-        // setting the welcome text
+        binding.ratio.text = "${calCurr.toString()}/${calGoal.toString()}"
 
         binding.breakfast.setOnClickListener {
             Toast.makeText(
@@ -81,16 +82,15 @@ class WelcomeFragment : Fragment() {
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCalorieFragment())
         }
 
-        binding.ratio.text = cal.toString()
-
         binding.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             // reset viewModel's boolean field; applies when sharedPref was used to login, user logs
             // out, and then immediately logs into another account w/out using sharedPref
 //            viewModel.sharedPrefUsed = false
-            val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
-            editor.clear()
-            editor.apply()
+            val editor: SharedPreferences.Editor? =
+                activity?.getSharedPreferences("shared_prefs", Context.MODE_PRIVATE)?.edit()
+            editor?.clear()
+            editor?.apply()
             Toast.makeText(
                 requireContext(),
                 "You are now logged out!",

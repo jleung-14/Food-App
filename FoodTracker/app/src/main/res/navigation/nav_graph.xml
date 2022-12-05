@@ -34,14 +34,15 @@
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" >
         <action
-            android:id="@+id/action_loginFragment_to_dashboardFragment"
+            android:id="@+id/action_loginFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.foodtracker.DashboardFragment"
         android:label="dashboard_fragment"
-        tools:layout="@layout/dashboard_fragment" />
+        tools:layout="@layout/dashboard_fragment" >
+    </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.foodtracker.WelcomeFragment"
@@ -62,7 +63,7 @@
         android:label="WelcomeFragment" >
         <action
             android:id="@+id/action_welcomeFragment_to_recordFragment"
-            app:destination="@id/registrationFragment" />
+            app:destination="@id/recordFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmationFragment"
@@ -72,8 +73,8 @@
             android:id="@+id/action_confirmationFragment_to_socialMediaFragment"
             app:destination="@id/socialMediaFragment" />
         <action
-            android:id="@+id/action_confirmationFragment_to_recordFragment"
-            app:destination="@id/recordFragment" />
+            android:id="@+id/action_confirmationFragment_to_audioActivity"
+            app:destination="@id/audioActivity" />
     </fragment>
     <fragment
         android:id="@+id/socialMediaFragment"

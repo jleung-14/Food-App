@@ -1,5 +1,6 @@
 package com.foodtracker
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -21,53 +22,56 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         // user login/info fields retrieved from SharedPref (if any)
-        val email : String? = MainActivity.sharedPref.getString("EMAIL_KEY", null)
-        val password : String? = MainActivity.sharedPref.getString("PASS_KEY", null)
-        val user : String? = MainActivity.sharedPref.getString("USER_KEY", null)
+        val sharePref = context?.getSharedPreferences("shared_pref", Context.MODE_PRIVATE)
+        if (sharePref != null) {
+            val email : String? = sharePref.getString("EMAIL_KEY", null)
+            val password : String? = sharePref.getString("PASS_KEY", null)
+            val user : String? = sharePref.getString("USER_KEY", null)
 
-        if (email != null && password != null && user != null) {
-            viewModel.email.postValue(email)
-            viewModel.user.postValue(user)
+            if (email != null && password != null && user != null) {
+                viewModel.email.postValue(email)
+                viewModel.user.postValue(user)
 
-            val database = FirebaseDatabase.getInstance().getReference("Users")
-            database.child(user).get().addOnSuccessListener {
+                val database = FirebaseDatabase.getInstance().getReference("Users")
+                database.child(user).get().addOnSuccessListener {
 
-                if (it.exists()){
-                    val name = it.child("name").value
-                    val goal = it.child("calorieGoal").value
-                    Log.i("Main Fragment", "Successfully pulled name & goal from db")
-                    viewModel.name.postValue(name.toString())
-                    viewModel.goal.postValue(goal.toString())
-                } else {
-                    Toast.makeText(requireContext(),"User Doesn't Exist",Toast.LENGTH_SHORT).show()
+                    if (it.exists()) {
+                        val name = it.child("name").value
+                        val goal = it.child("calorieGoal").value
+                        Log.i("Main Fragment", "Successfully pulled name & goal from db")
+                        viewModel.name.postValue(name.toString())
+                        viewModel.goal.postValue(goal.toString())
+                    } else {
+                        Toast.makeText(requireContext(),"User Doesn't Exist",Toast.LENGTH_SHORT).show()
+                    }
+
+                }.addOnFailureListener{
+                    Toast.makeText(requireContext(),"Failed",Toast.LENGTH_SHORT).show()
                 }
 
-            }.addOnFailureListener{
-                Toast.makeText(requireContext(),"Failed",Toast.LENGTH_SHORT).show()
-            }
+                val firebaseAuth : FirebaseAuth = requireNotNull(FirebaseAuth.getInstance())
+                firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.i("MainFrag", "successful Firebase authorization using SharedPref")
+                        // issue welcome Toast msg
+                        Toast.makeText(
+                            requireContext(),
+                            "Welcome back $user!",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
-            val firebaseAuth : FirebaseAuth = requireNotNull(FirebaseAuth.getInstance())
-            firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.i("MainFrag", "successful Firebase authorization using SharedPref")
-                    // issue welcome Toast msg
-                    Toast.makeText(
-                        requireContext(),
-                        "Welcome back $user!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    findNavController().navigate(R.id.action_mainFragment_to_welcomeFragment)
-                } else {
-                    val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
-                    editor.clear()
-                    editor.apply()
-                    // login failure
-                    Toast.makeText(
-                        requireContext(),
-                        "Login failed for some reason! Please try again later.",
-                        Toast.LENGTH_LONG
-                    ).show()
+                        findNavController().navigate(R.id.action_mainFragment_to_welcomeFragment)
+                    } else {
+                        val editor: SharedPreferences.Editor = sharePref.edit()
+                        editor.clear()
+                        editor.apply()
+                        // login failure
+                        Toast.makeText(
+                            requireContext(),
+                            "Login failed for some reason! Please try again later.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
             }
         }
