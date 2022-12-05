@@ -44,9 +44,11 @@ class ConfirmationFragment : Fragment() {
                         if(it.child("foods").value != null) {
                             val food = it.child("foods").value
                             Log.i("testing food", food as String)
+                            totalFoods.add(foodEntry)
                             totalFoods.addAll(food as Collection<String>)
                         }
                     else{
+                            Log.i("testing food", foodEntry)
                             totalFoods.add(foodEntry)
                         }
                     }
@@ -66,7 +68,7 @@ class ConfirmationFragment : Fragment() {
                 }
                 //DOUBTS ON THIS LINE, MAP APPARENTLY NEEDS STRING, STRING BUT I DONT THINK WE CAN JUST TOSTRING AN ENTIRE ARRAYLIST
                 user = mapOf("foods" to totalFoods.toString())
-                database.child("foods").updateChildren(user).addOnSuccessListener {
+                database.child(username).updateChildren(user).addOnSuccessListener {
                         Log.i("Calorie Fragment", "Updated goal in db")
                 }.addOnFailureListener{
                         Log.i("Calorie Fragment", "Failed to update goal in db")

@@ -40,8 +40,15 @@ class WelcomeFragment : Fragment() {
 
         // setting on-screen text fields
         binding.welcome.text = "Welcome $name"
-        binding.ratio.text = "${calCurr.toString()}/${calGoal.toString()}"
-
+        if (calCurr == null) {
+            binding.ratio.text = "0/${calGoal.toString()}"
+        }
+        else{
+            binding.ratio.text = "${calCurr.toString()}/${calGoal.toString()}"
+        }
+        if (calCurr != null && calGoal != null) {
+            binding.progressBar.progress = calCurr.toInt() / calGoal.toInt() * 100
+        }
         binding.breakfast.setOnClickListener {
             Toast.makeText(
                 requireContext(),
