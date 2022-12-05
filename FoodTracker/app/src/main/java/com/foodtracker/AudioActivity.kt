@@ -5,12 +5,8 @@ import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
 class AudioActivity : AppCompatActivity() {
@@ -19,6 +15,7 @@ class AudioActivity : AppCompatActivity() {
     // for text view and image view
     lateinit var outputTV: TextView
     lateinit var micIV: ImageView
+    lateinit var username: String
 
     // on below line we are creating a constant value
     private val REQUEST_CODE_SPEECH_INPUT = 1
@@ -26,6 +23,10 @@ class AudioActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio)
+        val extras = intent.extras
+        if (extras != null) {
+            username = extras.getString("username").toString()
+        }
 
         // initializing variables of list view with their ids.
         outputTV = findViewById(R.id.idTVOutput)
@@ -61,34 +62,17 @@ class AudioActivity : AppCompatActivity() {
             try {
                 startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
             } catch (e: Exception) {
-
-                // on below line we are specifying a prompt
-                // message as speak to text on below line.
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
-
-                // on below line we are specifying a try catch block.
-                // in this block we are calling a start activity
-                // for result method and passing our result code.
-                try {
-                    startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
-                } catch (e: Exception) {
-                    // on below line we are displaying error message in toast
-                    Toast
-                        .makeText(
-                            this@AudioActivity, " " + e.message,
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
-                }
-            }
-
-            val btnGoToFragment = findViewById<View>(R.id.btn_go_to_fragment) as Button
-            btnGoToFragment.setOnClickListener {
-                Log.i("AudioActivity", "inside onclicklistener")
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.audio_container, ConfirmationFragment()).commitNow()
+                // on below line we are displaying error message in toast
+                Toast
+                    .makeText(
+                        this@AudioActivity, " " + e.message,
+                        Toast.LENGTH_SHORT
+                    )
+                    .show()
             }
         }
+
+
     }
 
     // on below line we are calling on activity result method.
@@ -98,6 +82,7 @@ class AudioActivity : AppCompatActivity() {
         // in this method we are checking request
         // code with our result code.
         if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
+            var transcription = "test"
             // on below line we are checking if result code is ok
             if (resultCode == RESULT_OK && data != null) {
 
@@ -108,16 +93,31 @@ class AudioActivity : AppCompatActivity() {
 
                 // on below line we are setting data
                 // to our output text view.
-                outputTV.setText(// "abcdefg"
+                outputTV.setText(
                     Objects.requireNonNull(res)[0]
                 )
+                transcription = Objects.requireNonNull(res)[0]
+            }
 
-                //adding to firebase
-
-                
+            val calInput = findViewById<EditText>(R.id.calorieText)
+            val btnGoToFragment = findViewById<View>(R.id.btn_go_to_fragment) as ImageButton
+            btnGoToFragment.setOnClickListener {
+                Log.i("AudioActivity", "inside onclicklistener")
+                val confirmBundle = Bundle()
+                confirmBundle.putString("entry", transcription)
+                confirmBundle.putString("calories", calInput.text.toString())
+                confirmBundle.putString("username", username)
+                if (confirmBundle == null) {
+                    Log.w("AudioActivity", "bundle arg is NULL")
+                }
+                val conf = ConfirmationFragment()
+                conf.arguments = confirmBundle
+                if (conf.arguments == null) {
+                    Log.w("AudioActivity", "ConfirmFrag arguments is NULL")
+                }
+                supportFragmentManager.beginTransaction().add(R.id.audio_container, conf).commitNow()
             }
         }
-
-
     }
+
 }

@@ -48,9 +48,6 @@
         android:name="com.foodtracker.WelcomeFragment"
         android:label="WelcomeFragment" >
         <action
-            android:id="@+id/action_welcomeFragment_to_recordFragment"
-            app:destination="@id/recordFragment" />
-        <action
             android:id="@+id/action_welcomeFragment_to_calorieFragment"
             app:destination="@id/calorieFragment" />
         <action
