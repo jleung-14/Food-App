@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 //import com.foodtracker.R
 import com.foodtracker.databinding.ConfirmationFragmentBinding
@@ -28,48 +27,39 @@ class ConfirmationFragment : Fragment() {
         // the layout and then return the root view.
         val binding = ConfirmationFragmentBinding.inflate(inflater, container, false)
         // Firebase database instance
-        // ViewModel instance
-        val viewModel: UserViewModel by activityViewModels()
 
         val bundle = arguments
         val foodEntry = bundle!!.getString("entry")
         val calories = bundle.getString("calories")
         val username = bundle.getString("username")
-
+        var totalCalories = 0
         val database = FirebaseDatabase.getInstance().getReference("Users")
 
         if (username != null) {
             database.child(username).get().addOnSuccessListener {
-                val user = mapOf("stayLoggedIn" to true)
-                database.child(viewModel.user.value!!).updateChildren(user).addOnSuccessListener {
+                if (it.exists()) {
+                    //currentCal from firebase
+                    val curr = it.child("currentCal").value.toString().toInt()
+                    if (calories != null) {
+                        totalCalories = curr + calories.toInt()
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Failed1", Toast.LENGTH_SHORT).show()
+                }
+                val user = mapOf("currentCal" to totalCalories.toString())
+
+                database.child(username).updateChildren(user).addOnSuccessListener {
                 }.addOnFailureListener{
                     Log.i("Box is checked; stay logged in", "Box is checked; stay logged in")
                 }
-
-                if (it.exists()) {
-                    val name = it.child("name").value
-                    val goal = it.child("calorieGoal").value
-                    Log.i("Login Fragment", "read fields from Firebase: $name | $goal")
-                    viewModel.name.postValue(name.toString())
-                    viewModel.goal.postValue(goal.toString())
-                    Log.i("Login Fragment", "fields in vm: ${viewModel.name.value} or ${viewModel.name.value.toString()}")
-                } else {
-                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
-                }
-
             }.addOnFailureListener {
-                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed2", Toast.LENGTH_SHORT).show()
             }
         }
 
 
 
-
         binding.itemInput.text = "$foodEntry\n${calories}cal"
-
-        //instead of using viewModel to get currentCal, we should try to pull from firebase
-        val addToGoal = (viewModel.currentCal.value!!.toInt() + calories!!.toInt()).toString()
-        viewModel.currentCal.postValue(addToGoal)
 
         binding.noButton.setOnClickListener {
             Toast.makeText(
