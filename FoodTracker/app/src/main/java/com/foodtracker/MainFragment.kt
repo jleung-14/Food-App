@@ -40,11 +40,13 @@ class MainFragment : Fragment() {
                             loggedIn = it.child("stayLoggedIn").value
                             val name = it.child("name").value
                             val goal = it.child("calorieGoal").value
+                            val cal = it.child("currentCal").value
                             Log.i("Main Fragment", "Successfully pulled name & goal from db")
-                            viewModel.name.postValue(name.toString())
-                            viewModel.goal.postValue(goal.toString())
                             Log.i("Main Fragment Login stuff", loggedIn.toString())
-                            if(loggedIn == true) {
+                            if (loggedIn == true) {
+                                viewModel.name.postValue(name.toString())
+                                viewModel.goal.postValue(goal.toString())
+                                viewModel.currentCal.postValue(cal.toString())
                                 Log.i("LoggedInYay", "We are inside the if statement")
                                 val firebaseAuth: FirebaseAuth = requireNotNull(FirebaseAuth.getInstance())
                                 firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -69,10 +71,11 @@ class MainFragment : Fragment() {
                                             ).show()
                                         }
                                     }
-                            }
-                            else{
+                            } else {
                                 Log.i("logged in from welcome", "loggedIn is true but no if statement")
                             }
+                        } else {
+                            Log.w("Login Fragment", "User does NOT exist!")
                         }
 
                     }.addOnFailureListener {

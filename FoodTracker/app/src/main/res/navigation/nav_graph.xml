@@ -51,8 +51,8 @@
             android:id="@+id/action_welcomeFragment_to_calorieFragment"
             app:destination="@id/calorieFragment" />
         <action
-            android:id="@+id/action_welcomeFragment_to_audioActivity"
-            app:destination="@id/audioActivity" />
+            android:id="@+id/action_welcomeFragment_to_audioFragment"
+            app:destination="@id/audioFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmationFragment"
@@ -62,8 +62,8 @@
             android:id="@+id/action_confirmationFragment_to_listFragment"
             app:destination="@id/listFragment" />
         <action
-            android:id="@+id/action_confirmationFragment_to_audioActivity"
-            app:destination="@id/audioActivity" />
+            android:id="@+id/action_confirmationFragment_to_audioFragment"
+            app:destination="@id/audioFragment" />
     </fragment>
     <fragment
         android:id="@+id/calorieFragment"
@@ -89,9 +89,12 @@
             android:id="@+id/action_introductionFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
     </fragment>
-    <activity
-        android:id="@+id/audioActivity"
-        android:name="com.foodtracker.AudioActivity"
-        android:label="AudioActivity" >
-    </activity>
+    <fragment
+        android:id="@+id/audioFragment"
+        android:name="com.foodtracker.AudioFragment"
+        android:label="AudioFragment" >
+        <action
+            android:id="@+id/action_audioFragment_to_confirmFragment"
+            app:destination="@id/confirmationFragment" />
+    </fragment>
 </navigation>

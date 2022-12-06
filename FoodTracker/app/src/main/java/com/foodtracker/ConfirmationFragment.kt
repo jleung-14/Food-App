@@ -9,13 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-//import com.foodtracker.R
 import com.foodtracker.databinding.ConfirmationFragmentBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-
-import kotlin.random.Random
 
 class ConfirmationFragment : Fragment() {
 
@@ -30,12 +25,11 @@ class ConfirmationFragment : Fragment() {
         // Firebase database instance
         val viewModel : UserViewModel by activityViewModels()
 
-        val bundle = arguments
-        val foodEntry = bundle!!.getString("entry")
-        val calories = bundle.getString("calories")
-        val username = bundle.getString("username")
+        val foodEntry = viewModel.meal.value.toString()
+        val calories = viewModel.updateCal.value.toString()
+        val username = viewModel.user.value.toString()
         var updatedCalories = 0
-        var totalFoods : MutableList<String> = ArrayList()
+        val totalFoods : MutableList<String> = ArrayList()
         val database = FirebaseDatabase.getInstance().getReference("Users")
 
         binding.itemInput.text = "$foodEntry\n${calories}cal"
@@ -46,59 +40,50 @@ class ConfirmationFragment : Fragment() {
                 "No selected",
                 Toast.LENGTH_SHORT
             ).show()
-
-            findNavController().navigate(R.id.action_confirmationFragment_to_audioActivity)
+            findNavController().navigate(R.id.action_confirmationFragment_to_audioFragment)
         }
         binding.yesButton.setOnClickListener {
             if (username != null) {
                 database.child(username).get().addOnSuccessListener {
                     if (it.exists()) {
                         //food here should be the foods field from firebase, which should be an arrayList of strings
-                        if (foodEntry != null) {
-                            if(it.child("foods").value != null) {
-                                var food = it.child("foods").value
-                                var temp = food as ArrayList<String>
-                                Log.i("CHECKING temp", temp.toString())
-                                for (i in temp){
-                                    totalFoods.add(i)
-                                }
-                                totalFoods.add(foodEntry)
-                                Log.i("CHECKING after adding ", totalFoods.toString())
+                        if(it.child("foods").value != null) {
+                            val food = it.child("foods").value
+                            val temp = food as ArrayList<String>
+                            Log.i("CHECKING temp", temp.toString())
+                            for (i in temp){
+                                totalFoods.add(i)
                             }
-                            else{
-                                Log.i("testing food", foodEntry)
-                                totalFoods.add(foodEntry)
-                            }
+                            totalFoods.add(foodEntry)
+                            Log.i("CHECKING after adding ", totalFoods.toString())
                         }
-                        //currentCal from firebase
+                        else{
+                            Log.i("testing food", foodEntry)
+                            totalFoods.add(foodEntry)
+                        }
+                        // currentCal from firebase
                         val curr = it.child("currentCal").value.toString().toInt()
 
-                        if (calories != null) {
-                            updatedCalories = curr + calories.toInt()
+                        updatedCalories = curr + calories.toInt()
 
-                        }
                     } else {
                         Toast.makeText(requireContext(), "Failed1", Toast.LENGTH_SHORT).show()
                     }
                     viewModel.currentCal.postValue((viewModel.currentCal.value.toString().toInt() + viewModel.updateCal.value.toString().toInt()).toString())
-                    Log.i("viewmodel cal count updated", viewModel.currentCal.value.toString())
-                    var user = mapOf("currentCal" to updatedCalories.toString())
+                    Log.i("viewModel cal count updated", viewModel.currentCal.value.toString())
+                    val user = mapOf("currentCal" to updatedCalories.toString())
                     database.child(username).updateChildren(user).addOnSuccessListener {
                     }.addOnFailureListener{
                     }
-                    //DOUBTS ON THIS LINE, MAP APPARENTLY NEEDS STRING, STRING BUT I DONT THINK WE CAN JUST TOSTRING AN ENTIRE ARRAYLIST
-                    var thing = mapOf("foods" to totalFoods)
+                    val thing = mapOf("foods" to totalFoods)
                     database.child(username).updateChildren(thing).addOnSuccessListener {
-                    }.addOnFailureListener{
-                    }
+                    }.addOnFailureListener{ }
 
                 }.addOnFailureListener {
                     Toast.makeText(requireContext(), "Failed2", Toast.LENGTH_SHORT).show()
                 }
 
             }
-
-
 
             Toast.makeText(
                 requireContext(),

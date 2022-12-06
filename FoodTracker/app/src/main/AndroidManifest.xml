@@ -20,12 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AudioActivity"
-            android:screenOrientation="portrait"/>
 
         <activity android:name=".LoginFragment" tools:ignore="Instantiatable" />
         <activity android:name=".RegistrationFragment" tools:ignore="Instantiatable" />
-        <activity android:name=".DashboardFragment" tools:ignore="Instantiatable" />
+        <activity android:name=".AudioFragment" tools:ignore="Instantiatable" />
     </application>
 
 </manifest>

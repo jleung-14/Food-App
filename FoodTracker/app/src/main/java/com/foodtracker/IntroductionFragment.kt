@@ -33,7 +33,7 @@ class IntroductionFragment : Fragment() {
         binding.imageButton.setOnClickListener {
             // get 'goalText' input
             var cal : String = binding.goalText.text.toString()
-            Log.i("Calorie Fragment", "Calories from user: $cal")
+            Log.i("Intro Fragment", "Calories from user: $cal")
 
             // post goal to db and viewModel's goal field
             viewModel.goal.postValue(cal)
