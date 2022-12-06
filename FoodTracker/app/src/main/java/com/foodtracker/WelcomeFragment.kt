@@ -37,7 +37,7 @@ class WelcomeFragment : Fragment() {
         val user: String? = viewModel.user.value
         val name: String? = viewModel.name.value
         val calGoal : String? = viewModel.goal.value
-        val calCurr : String? = viewModel.currentCal.value
+        var calCurr : String? = viewModel.currentCal.value
         var progressBar: ProgressBar? = null
 
         // setting on-screen text fields
@@ -94,6 +94,15 @@ class WelcomeFragment : Fragment() {
             findNavController().popBackStack(R.id.mainFragment, false)
         }
         binding.reset.setOnClickListener {
+            database = FirebaseDatabase.getInstance().getReference("Users")
+            val cal = mapOf("currentCal" to 0)
+            database.child(user!!).updateChildren(cal).addOnSuccessListener {
+            }.addOnFailureListener{
+            }
+            viewModel.currentCal.postValue("0")
+            progressBar.progress = 0
+            calCurr = "0"
+            binding.ratio.text = "0/${calGoal.toString()}"
 
         }
 
