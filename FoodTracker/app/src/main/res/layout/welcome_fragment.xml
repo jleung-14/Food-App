@@ -61,35 +61,8 @@
         app:layout_constraintTop_toBottomOf="@id/textView5"
         app:layout_constraintVertical_bias="0.374" />
 
-    <Button
-        android:id="@+id/lunch"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Lunch"
-        app:layout_constraintEnd_toEndOf="@+id/breakfast"
-        app:layout_constraintStart_toStartOf="@+id/breakfast"
-        app:layout_constraintTop_toBottomOf="@+id/breakfast" />
 
-    <Button
-        android:id="@+id/dinner"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Dinner"
-        app:layout_constraintEnd_toEndOf="@+id/lunch"
-        app:layout_constraintStart_toStartOf="@+id/lunch"
-        app:layout_constraintTop_toBottomOf="@+id/lunch" />
 
-    <Button
-        android:id="@+id/other"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Other"
-        app:layout_constraintEnd_toEndOf="@+id/dinner"
-        app:layout_constraintStart_toStartOf="@+id/dinner"
-        app:layout_constraintTop_toBottomOf="@+id/dinner" />
 
     <ProgressBar
         android:id="@+id/progressBar"

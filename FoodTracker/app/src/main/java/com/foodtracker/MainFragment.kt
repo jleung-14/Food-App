@@ -73,12 +73,6 @@ class MainFragment : Fragment() {
                             else{
                                 Log.i("logged in from welcome", "loggedIn is true but no if statement")
                             }
-                        } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "User Doesn't Exist",
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
 
                     }.addOnFailureListener {

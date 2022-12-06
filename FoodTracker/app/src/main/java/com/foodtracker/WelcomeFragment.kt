@@ -63,35 +63,8 @@ class WelcomeFragment : Fragment() {
             //findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToAudioActivity())
         }
 
-        binding.lunch.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Lunch selected",
-                Toast.LENGTH_SHORT
-            ).show()
-            viewModel.meal.postValue("Lunch")
-            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToAudioActivity())
-        }
 
-        binding.dinner.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Dinner selected",
-                Toast.LENGTH_SHORT
-            ).show()
-            viewModel.meal.postValue("Dinner")
-            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToAudioActivity())
-        }
 
-        binding.other.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Other selected",
-                Toast.LENGTH_SHORT
-            ).show()
-            viewModel.meal.postValue("Other")
-            findNavController().navigate(R.id.action_welcomeFragment_to_audioActivity)
-        }
 
         binding.goalButton.setOnClickListener {
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCalorieFragment())
