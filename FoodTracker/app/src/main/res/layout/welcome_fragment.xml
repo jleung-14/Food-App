@@ -16,7 +16,7 @@
         android:text="@string/name"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toTopOf="@+id/breakfast"
+        app:layout_constraintBottom_toTopOf="@+id/Meal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,21 +41,22 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Which meal would you like to log?"
-        android:textSize="20dp"
+        android:text="Click the buton to log your meal"
         android:textColor="@color/black"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.386" />
+        app:layout_constraintVertical_bias="0.528" />
 
     <Button
-        android:id="@+id/breakfast"
+        android:id="@+id/Meal"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
-        android:text="Breakfast"
+        android:text="meal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView5"
@@ -94,5 +95,13 @@
         app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click here to reset calorie count"
+        tools:layout_editor_absoluteX="64dp"
+        tools:layout_editor_absoluteY="245dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

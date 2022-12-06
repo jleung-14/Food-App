@@ -41,7 +41,7 @@ class WelcomeFragment : Fragment() {
         binding.ratio.text = "${calCurr.toString()}/${calGoal.toString()}"
         binding.progressBar.progress = calCurr!!.toInt() / calGoal!!.toInt() * 100
 
-        binding.breakfast.setOnClickListener {
+        binding.Meal.setOnClickListener {
             Toast.makeText(
                 requireContext(),
                 "Breakfast selected",
