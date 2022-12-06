@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_audioFragment"
             app:destination="@id/audioFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_listFragment"
+            app:destination="@id/listFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmationFragment"

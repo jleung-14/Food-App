@@ -20,17 +20,10 @@ import com.google.firebase.database.FirebaseDatabase
 
 class DummyFragment : Fragment() {
 
-    // Firebase authorization instance
-    private lateinit var firebaseAuth: FirebaseAuth
-    // Binding to XML layout
-    private lateinit var binding: DummyFragmentBinding
-    // save login info CheckBox
-    private val viewModel : UserViewModel by activityViewModels()
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         // Use the provided ViewBinding class to inflate the layout.
-        binding = DummyFragmentBinding.inflate(inflater, container, false)
+        val binding = DummyFragmentBinding.inflate(inflater, container, false)
         binding.button.setOnClickListener{
             findNavController().navigate(R.id.action_DummyFragment_to_ListFragment)
 

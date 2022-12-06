@@ -67,7 +67,7 @@ class ConfirmationFragment : Fragment() {
                             }
                             else{
                                 Log.i("testing food", foodEntry)
-                                totalFoods.add("$foodEntry $calories cal")
+                                totalFoods.add("$foodEntry | $calories cal")
                             }
                         }
                     } else {
@@ -76,6 +76,7 @@ class ConfirmationFragment : Fragment() {
                     viewModel.currentCal.postValue(updatedCalories.toString())
                     Log.i("viewmodel cal count updated", viewModel.currentCal.value.toString())
                     var user = mapOf("currentCal" to updatedCalories.toString())
+                    Log.i("updating current", updatedCalories.toString())
                     database.child(username).updateChildren(user).addOnSuccessListener {
                     }.addOnFailureListener{
                     }

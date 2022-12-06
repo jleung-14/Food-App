@@ -113,7 +113,7 @@ class AudioFragment : Fragment() {
 
             val calInput = binding1.root.findViewById<EditText>(R.id.calorieText)
             binding1.btnGoToFragment.setOnClickListener {
-                Log.i("AudioFragment", "posting cal + entry to viewModel")
+                Log.i("AudioFragment", "posting cal + entry to viewModel ${calInput.text}")
                 viewModel.meal.postValue(transcription)
                 viewModel.updateCal.postValue(calInput.text.toString())
                 findNavController().navigate(R.id.action_audioFragment_to_confirmFragment)

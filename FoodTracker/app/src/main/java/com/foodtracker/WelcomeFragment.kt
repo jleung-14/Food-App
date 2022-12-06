@@ -54,6 +54,11 @@ class WelcomeFragment : Fragment() {
             progressBar.progress = (calCurr!!.toInt() * 100)/calGoal!!.toInt()
             progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE);
         }
+
+        binding.List.setOnClickListener {
+            findNavController().navigate(R.id.action_welcomeFragment_to_listFragment)
+        }
+
         binding.Meal.setOnClickListener {
             Toast.makeText(
                 requireContext(),
