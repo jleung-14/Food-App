@@ -1,5 +1,7 @@
 package com.foodtracker
 
-class ListFragment {
+import androidx.fragment.app.Fragment
+
+class ListFragment : Fragment() {
 
 }

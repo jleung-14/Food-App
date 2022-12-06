@@ -1,12 +1,8 @@
 package com.foodtracker
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
-import android.provider.MediaStore.Audio
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,27 +32,15 @@ class WelcomeFragment : Fragment() {
         val viewModel: UserViewModel by activityViewModels()
         // 'user' name String (retrieved from UserViewModel instance)
         val user: String? = viewModel.user.value
-        var name: String? = viewModel.name.value
-        var calGoal : String? = viewModel.goal.value
-        var calCurr : String? = viewModel.currentCal.value
+        val name: String? = viewModel.name.value
+        val calGoal : String? = viewModel.goal.value
+        val calCurr : String? = viewModel.currentCal.value
 
         // setting on-screen text fields
         binding.welcome.text = "Welcome $name"
-        if (calCurr == null) {
-            binding.ratio.text = "0/${calGoal.toString()}"
-        }
-        else{
-            binding.ratio.text = "${calCurr.toString()}/${calGoal.toString()}"
-        }
-        if (calCurr != null && calGoal != null) {
-            if(calCurr > calGoal){
-                binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED);
-                binding.progressBar.progress = 100
-            }
-            else{
-                binding.progressBar.progress = calCurr.toInt() / calGoal.toInt() * 100
-            }
-        }
+        binding.ratio.text = "${calCurr.toString()}/${calGoal.toString()}"
+        binding.progressBar.progress = calCurr!!.toInt() / calGoal!!.toInt() * 100
+
         binding.breakfast.setOnClickListener {
             Toast.makeText(
                 requireContext(),
@@ -64,14 +48,9 @@ class WelcomeFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             viewModel.meal.postValue("Breakfast")
-            val temp = Intent(activity, AudioActivity::class.java)
-            temp.putExtra("username", user)
-            startActivity(temp)
 
-            //findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToAudioActivity())
+            findNavController().navigate(R.id.action_welcomeFragment_to_audioFragment)
         }
-
-
 
 
         binding.goalButton.setOnClickListener {
@@ -93,10 +72,9 @@ class WelcomeFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
 
-
             database = FirebaseDatabase.getInstance().getReference("Users")
-            val user = mapOf("stayLoggedIn" to false)
-            database.child(viewModel.user.value!!).updateChildren(user).addOnSuccessListener {
+            val user1 = mapOf("stayLoggedIn" to false)
+            database.child(user!!).updateChildren(user1).addOnSuccessListener {
                 Log.i("Welcome Fragment", "Logged out")
             }.addOnFailureListener{
                 Log.i("Welcome Fragment", "Log out failed")

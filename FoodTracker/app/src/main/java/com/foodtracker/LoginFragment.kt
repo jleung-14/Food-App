@@ -25,9 +25,7 @@ class LoginFragment : Fragment() {
     private lateinit var binding: LoginFragmentBinding
     // save login info CheckBox
     private lateinit var saveInfoBox : CheckBox
-
     private val viewModel : UserViewModel by activityViewModels()
-//    private val editor : SharedPreferences.Editor = MainActivity.sharedPref.edit()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -103,10 +101,12 @@ class LoginFragment : Fragment() {
             if (it.exists()) {
                 val name = it.child("name").value
                 val goal = it.child("calorieGoal").value
-                Log.i("Login Fragment", "read fields from Firebase: $name | $goal")
+                val cal = it.child("currentCal").value
+                Log.i("Login Fragment", "fields from Firebase: $name | $goal | $cal")
                 viewModel.name.postValue(name.toString())
                 viewModel.goal.postValue(goal.toString())
-                Log.i("Login Fragment", "fields in vm: ${viewModel.name.value} or ${viewModel.name.value.toString()}")
+                viewModel.currentCal.postValue(cal.toString())
+                Log.i("Login Fragment", "fields in vm: ${viewModel.name.value} | ${viewModel.name.value.toString()}")
             } else {
                 Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
             }
