@@ -93,7 +93,7 @@ class ConfirmationFragment : Fragment() {
                 "Yes selected",
                 Toast.LENGTH_SHORT
             ).show()
-            findNavController().navigate(R.id.action_confirmationFragment_to_listFragment)
+            findNavController().navigate(R.id.action_confirmationFragment_to_dummyFragment)
         }
         return binding.root
     }

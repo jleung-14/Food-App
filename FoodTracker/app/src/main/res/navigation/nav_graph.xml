@@ -64,6 +64,10 @@
         <action
             android:id="@+id/action_confirmationFragment_to_audioFragment"
             app:destination="@id/audioFragment" />
+
+        <action
+            android:id="@+id/action_confirmationFragment_to_dummyFragment"
+            app:destination="@id/dummyFragment" />
     </fragment>
     <fragment
         android:id="@+id/calorieFragment"
@@ -96,5 +100,16 @@
         <action
             android:id="@+id/action_audioFragment_to_confirmFragment"
             app:destination="@id/confirmationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dummyFragment"
+        android:name="com.foodtracker.DummyFragment"
+        android:label="DummyFragment" >
+        <action
+            android:id="@+id/action_DummyFragment_to_ListFragment"
+            app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_DummyFragment_to_WelcomeFragment"
+            app:destination="@id/welcomeFragment" />
     </fragment>
 </navigation>
