@@ -98,10 +98,14 @@
 
     <Button
         android:id="@+id/reset"
-        android:layout_width="wrap_content"
+        android:layout_width="300px"
         android:layout_height="wrap_content"
-        android:text="Click here to reset calorie count"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="245dp" />
+        android:layout_marginTop="260dp"
+        android:text="Click to reset calorie count"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

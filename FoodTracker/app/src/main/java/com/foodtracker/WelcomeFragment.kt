@@ -2,11 +2,14 @@ package com.foodtracker
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -35,12 +38,22 @@ class WelcomeFragment : Fragment() {
         val name: String? = viewModel.name.value
         val calGoal : String? = viewModel.goal.value
         val calCurr : String? = viewModel.currentCal.value
+        var progressBar: ProgressBar? = null
 
         // setting on-screen text fields
+        progressBar = binding.root.findViewById<ProgressBar>(R.id.progressBar) as ProgressBar
+
         binding.welcome.text = "Welcome $name"
         binding.ratio.text = "${calCurr.toString()}/${calGoal.toString()}"
-        binding.progressBar.progress = calCurr!!.toInt() / calGoal!!.toInt() * 100
-
+        progressBar.visibility = View.VISIBLE
+        if(calCurr!!.toInt() > calGoal!!.toInt()) {
+            progressBar.progress = 100
+            progressBar.progressTintList = ColorStateList.valueOf(Color.RED);
+        }
+        else {
+            progressBar.progress = (calCurr!!.toInt() * 100)/calGoal!!.toInt()
+            progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE);
+        }
         binding.Meal.setOnClickListener {
             Toast.makeText(
                 requireContext(),
@@ -51,7 +64,6 @@ class WelcomeFragment : Fragment() {
 
             findNavController().navigate(R.id.action_welcomeFragment_to_audioFragment)
         }
-
 
         binding.goalButton.setOnClickListener {
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCalorieFragment())
@@ -80,6 +92,9 @@ class WelcomeFragment : Fragment() {
                 Log.i("Welcome Fragment", "Log out failed")
             }
             findNavController().popBackStack(R.id.mainFragment, false)
+        }
+        binding.reset.setOnClickListener {
+
         }
 
         // Return the root view.
