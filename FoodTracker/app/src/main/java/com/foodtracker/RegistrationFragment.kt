@@ -106,7 +106,7 @@ class RegistrationFragment : Fragment() {
 
                 // adding new user to Firebase as child of 'Users'
                 database = FirebaseDatabase.getInstance().getReference("Users")
-                val newUser = User(name, user, email, "0", "0", stay, arrayListOf<String>())
+                val newUser = User(name, user, email, "0", "0", stay, arrayListOf(""))
                 viewModel.currentCal.postValue("0")
 
                 database.child(user).setValue(newUser).addOnSuccessListener {
