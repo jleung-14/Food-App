@@ -3,6 +3,8 @@ package com.foodtracker
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore.Audio
 import android.util.Log
@@ -47,7 +49,13 @@ class WelcomeFragment : Fragment() {
             binding.ratio.text = "${calCurr.toString()}/${calGoal.toString()}"
         }
         if (calCurr != null && calGoal != null) {
-            binding.progressBar.progress = calCurr.toInt() / calGoal.toInt() * 100
+            if(calCurr > calGoal){
+                binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED);
+                binding.progressBar.progress = 100
+            }
+            else{
+                binding.progressBar.progress = calCurr.toInt() / calGoal.toInt() * 100
+            }
         }
         binding.breakfast.setOnClickListener {
             Toast.makeText(
